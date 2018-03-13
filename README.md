@@ -23,6 +23,8 @@ For Windows users, run
 activate wt-env
 ```
 
+See this link for more details: https://conda.io/docs/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file 
+
 ## Spec File
 
 You can view the explicit links to all packages being used in `spec-file.txt`
