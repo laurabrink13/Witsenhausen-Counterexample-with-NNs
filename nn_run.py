@@ -1,20 +1,12 @@
 import tensorflow as tf
 import numpy as np
 import uuid
-import matplotlib.pyplot as plt
 import sys
 
-# m = 1 # dimension
-# k_sq = 0.5
-# learning_rate = 0.01
-# epochs = 10000
-# batch_size = 100
-# x_stddev = 3
-# activation_fn_1 = tf.nn.sigmoid
-# activation_fn = tf.nn.relu
-# num_units_1 = 150
-# num_units_2 = 30
-# decay = 1 - 1e-10
+import matplotlib
+matplotlib.use('Agg')
+
+import matplotlib.pyplot as plt
 
 def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
   activation_fn_1, activation_fn_2, num_units_1, num_units_2, decay, test_averaging):
@@ -143,7 +135,7 @@ if __name__ == "__main__":
       for n_units_2 in num_units_2s:
         print('RUNNING FOR learning_rate: {}, num_units_1: {}, num_units_2: {}'.format(lr, n_units_1, n_units_2))
         print('-----------------------------------------------\n')
-        neural_net_run(m = 1, k_sq = 0.5, learning_rate = lr, epochs = 100, batch_size = 100, 
+        neural_net_run(m = 1, k_sq = k_squared, learning_rate = lr, epochs = num_epochs, batch_size = 100, 
           x_stddev = 3, activation_fn_1 = tf.nn.sigmoid, activation_fn_2 = tf.nn.sigmoid, num_units_1 = n_units_1, 
           num_units_2 = n_units_2, decay = 1 - 1e-10, test_averaging = 100)
         print('-----------------------------------------------\n')
