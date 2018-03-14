@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import uuid
 import sys
-
+import scipy.stats 
 import matplotlib
 matplotlib.use('Agg')
 
@@ -74,68 +74,81 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
                adaptive_learning_rate: learning_rate * (decay**step)})
 
           if step % 100 == 0:
-              print("step: {}, value: {}".format(step, val))
+              print("step: {}, loss: {}".format(step, val))
 
     # Test over a continuous range of X
-      x0_test = np.linspace(-2*x_stddev, 2*x_stddev, num=100)
+      x0_test = np.linspace(-3*x_stddev, 3*x_stddev, num=100)
       y1_test = x0_test
-      u1_test, u2_test, x1_test = np.zeros((1, 100)), np.zeros((1, 100)), np.zeros((1, 100))
-
+      u1_test, u2_test, x1_test, wits_cost_test = np.zeros((1, 100)), np.zeros((1, 100)), np.zeros((1, 100)), np.zeros((1, 100))
+      wits_cost_total = 0.0 
+      x0_distribution = scipy.stats.norm(loc=0.0, scale=x_stddev)
       for i in range(100):
-          u1t, u2t, x1t = 0, 0, 0
+          u1t, u2t, x1t, wits_cost_t  = 0, 0, 0, 0
           for _ in range(test_averaging):
-              u1tmp, u2tmp, x1tmp = sess.run(
-                  [u1, u2, x1],
+            u1tmp, u2tmp, x1tmp, wits_cost_tmp = sess.run(
+                  [u1, u2, x1, wits_cost],
                   feed_dict={x0: x0_test[i].reshape((1, 1)),
-                  z: np.random.normal(size=(1, 1), scale=1),
-                  y1: y1_test[i].reshape((1, 1))
-             })
-
-          u1t += u1tmp
-          u2t += u2tmp
-          x1t += x1tmp
-
+                  z: np.random.normal(size=(1, 1), scale=1)
+                  #y1: y1_test[i].reshape((1, 1)) #don't pass in y_1
+            })
+            wits_cost_t += wits_cost_tmp
+            u1t += u1tmp
+            u2t += u2tmp
+            x1t += x1tmp
+          scaled_wits_cost = wits_cost_t * x0_distribution.pdf(x0_test[i])
+          wits_cost_test[0, i] = scaled_wits_cost / test_averaging
           u1_test[0, i] = u1t / test_averaging
           u2_test[0, i] = -u2t / test_averaging
           x1_test[0, i] = x1t / test_averaging
+      print('Mean loss is {}'.format(np.mean(wits_cost_test)))
 
-      l1, = plt.plot(x0_test, u1_test[0], label="U1 Test")
-      plt.legend(handles=[l1])
-      plt.title("{} Unit NN With Activation Fn {}".format(
-        str(num_units_1), str(activation_fn_1)))
-      plt.savefig("figs/{}_{}_{}_u_1_{}.png".format(
-        str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      #PLOTTING. Unnecessary for now because we're just doing hyperparameter search
+      # l1, = plt.plot(x0_test, u1_test[0], label="U1 Test")
+      # plt.legend(handles=[l1])
+      # plt.title("{} Unit NN With Activation Fn {}".format(
+      #   str(num_units_1), str(activation_fn_1)))
+      # plt.savefig("figs/{}_{}_{}_u_1_{}.png".format(
+      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
 
-      plt.clf()
-      l1, = plt.plot(y1_test, u2_test[0], label="U2 Test")
-      plt.legend(handles=[l1])
-      plt.title("{} Unit NN With Activation Fn {}".format(
-        str(num_units_2), str(activation_fn_2)))
-      plt.savefig("figs/{}_{}_{}_u_2_{}.png".format(
-        str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      # plt.clf()
+      # l1, = plt.plot(y1_test, u2_test[0], label="U2 Test")
+      # plt.legend(handles=[l1])
+      # plt.title("{} Unit NN With Activation Fn {}".format(
+      #   str(num_units_2), str(activation_fn_2)))
+      # plt.savefig("figs/{}_{}_{}_u_2_{}.png".format(
+      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
 
-      plt.clf()
-      l2, = plt.plot(x0_test, x1_test[0], label="X1 Test")
-      plt.title("{} Unit NN With Activation Fn {}".format(
-        str(num_units_1), str(activation_fn_1)))
-      plt.legend(handles=[l2])
-      plt.savefig("figs/{}_{}_{}_x_1_{}.png".format(
-        str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      # plt.clf()
+      # l2, = plt.plot(x0_test, x1_test[0], label="X1 Test")
+      # plt.title("{} Unit NN With Activation Fn {}".format(
+      #   str(num_units_1), str(activation_fn_1)))
+      # plt.legend(handles=[l2])
+      # plt.savefig("figs/{}_{}_{}_x_1_{}.png".format(
+      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
 
 if __name__ == "__main__":
-  learning_rates = [0.01, 0.001, 0.0001, 0.005]
-  num_units_1s = [100, 150, 200]
-  num_units_2s = [20, 30, 40]
+  #learning_rates = [0.01, 0.001, 0.0001, 0.005]
+  learning_rates = [0.000001, 0.0000001, 0.0000001]
+  num_units_1s = [100]
+  num_units_2s = [20]
+  activation_fn_1 = tf.nn.sigmoid
+  activation_fn_2 = tf.nn.sigmoid
 
   k_squared = float(sys.argv[1])
   num_epochs = int(sys.argv[2])
+  run_num = 1
 
   for lr in learning_rates:
     for n_units_1 in num_units_1s:
       for n_units_2 in num_units_2s:
-        print('RUNNING FOR learning_rate: {}, num_units_1: {}, num_units_2: {}'.format(lr, n_units_1, n_units_2))
+        np.random.seed(run_num)
+        print('RUN NUMBER {}'.format(run_num))
+        print('RUNNING FOR learning_rate: {}, num_units_1: {}, num_units_2: {}, k_sq: {}, epochs: {}, activation_fn_1: {}, activation_fn_2: {}'.format(lr, 
+          n_units_1, n_units_2, k_squared, num_epochs, activation_fn_1, activation_fn_2))
+        print('Decay rate: {}'.format(1 - 1e-4))
         print('-----------------------------------------------\n')
         neural_net_run(m = 1, k_sq = k_squared, learning_rate = lr, epochs = num_epochs, batch_size = 100, 
-          x_stddev = 3, activation_fn_1 = tf.nn.sigmoid, activation_fn_2 = tf.nn.sigmoid, num_units_1 = n_units_1, 
-          num_units_2 = n_units_2, decay = 1 - 1e-10, test_averaging = 100)
+          x_stddev = 3, activation_fn_1 = activation_fn_1, activation_fn_2 = activation_fn_2, num_units_1 = n_units_1, 
+          num_units_2 = n_units_2, decay = 1 - 1e-4, test_averaging = 100)
         print('-----------------------------------------------\n')
+        run_num += 1
