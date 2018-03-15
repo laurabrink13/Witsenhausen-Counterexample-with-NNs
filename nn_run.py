@@ -173,8 +173,8 @@ if __name__ == "__main__":
   encoder_activation_2s = [tf.identity]
   decoder_activation_1s = [tf.nn.sigmoid]
   decoder_activation_2s = [tf.identity]
-  num_units_1s = [150, 250]
-  num_units_2s = [30, 100, 250]
+  num_units_1s = [150]
+  num_units_2s = [30]
   decay_rates = [1 - 1e-3]
   test_average_sizes = [100]
   optimizers = [tf.train.AdamOptimizer]
@@ -189,9 +189,26 @@ if __name__ == "__main__":
     learning_rates, num_epochs, batch_size, x_stddeviations, encoder_activation_1s,
     encoder_activation_2s, decoder_activation_1s, decoder_activation_2s, num_units_1s, 
     num_units_2s, decay_rates, test_average_sizes, optimizers)
-  
+
+
   for tup in all_hyperparam_tuples: 
+    #Unroll the huge tuple of hyperparameters.
+    #I apologize for the very long line of code. RIP pep8 - Akhil
+    m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func = tup
+
+    np.random.seed(run_num)
+    print('RUN NUMBER {}'.format(run_num))
+    print('Numpy random seed {}'.format(run_num))
+    print('HYPERPARAMETERS ARE: ')
+    print('m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, '
+      + 'decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func')
     print(tup)
+    print('-----------------------------------------------\n')
+    neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
+      encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
+      num_units_1, num_units_2, decay, test_averaging, optimizer_func)
+    print('-----------------------------------------------\n')
+    run_num += 1
 
   #   def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
   # encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
