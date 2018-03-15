@@ -4,13 +4,19 @@ import uuid
 import sys
 import scipy.stats 
 import matplotlib
+import itertools 
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
 
+#encoder_activation_1 <- activation_fn_1
+##encoder_activation_2 (new)
+#decoder_activation_1 <- activation_fn_2
+##encoder_activation_2 (new)
+
 def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
-  activation_fn_1, activation_fn_2, num_units_1, num_units_2, 
-  decay, test_averaging, optimizer_func):
+  encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
+  num_units_1, num_units_2, decay, test_averaging, optimizer_func):
   '''
   A single run of the neural network. Used for hyerparameter search.
   m = Dimensions
@@ -19,8 +25,10 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   epochs = number of epochs 
   batch_size = batch_size for NN training
   x_stddev = standard deviation of x_0 
-  activation_fn_1 = activation function for layer 1, 2
-  activation_fn_2 = activation function for layer 3, 4
+  encoder_activation_1 = activation function for layer 1
+  encoder_activation_2 = activation function for layer 2
+  decoder_activation_1 = activation function for layer 3
+  decoder_activation_2 = activation function for layer 4
   num_units_1 = number of units in hidden layer 1 
   num_units_2 = number of units in hidden layer 3 
   decay = learning rate decay 
@@ -31,9 +39,9 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   z = tf.placeholder(tf.float32, [None, m])
 
   l1 = tf.layers.dense(
-    x0, num_units_1, activation=activation_fn_1, use_bias=True)
+    x0, num_units_1, activation=encoder_activation_1, use_bias=True)
   l2 = tf.layers.dense(
-    l1, m, activation=tf.identity, use_bias=True)
+    l1, m, activation=encoder_activation_2, use_bias=True)
 
   u1 = l2
   u1_cost = (tf.norm(u1)**2) / batch_size
@@ -43,9 +51,9 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   y1 = tf.placeholder_with_default(x1 + z, [None, m])
 
   l3 = tf.layers.dense(
-    y1, num_units_2, activation=activation_fn_2, use_bias=True)
+    y1, num_units_2, activation=decoder_activation_1, use_bias=True)
   l4 = tf.layers.dense(
-    l3, m, activation=tf.identity, use_bias=True)
+    l3, m, activation=decoder_activation_2, use_bias=True)
 
   u2 = -l4
   x2 = x1 + u2
@@ -124,64 +132,92 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
       print('Mean loss is {}'.format(total_cost / total_density))
 
       #PLOTTING. Unnecessary for now because we're just doing hyperparameter search
-      l1, = plt.plot(x0_test, u1_test[0], label="U1 Test")
-      plt.legend(handles=[l1])
-      plt.title("{} Unit NN With Activation Fn {}".format(
-        str(num_units_1), str(activation_fn_1)))
-      plt.savefig("figs/{}_{}_{}_u_1_{}.png".format(
-        str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      #TODO fix activation function names
+      # l1, = plt.plot(x0_test, u1_test[0], label="U1 Test")
+      # plt.legend(handles=[l1])
+      # plt.title("{} Unit NN With Activation Fn {}".format(
+      #   str(num_units_1), str(encoder_activation_1)))
+      # plt.savefig("figs/{}_{}_{}_u_1_{}.png".format(
+      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
 
-      plt.clf()
-      l1, = plt.plot(y1_test, u2_test[0], label="U2 Test")
-      plt.legend(handles=[l1])
-      plt.title("{} Unit NN With Activation Fn {}".format(
-        str(num_units_2), str(activation_fn_2)))
-      plt.savefig("figs/{}_{}_{}_u_2_{}.png".format(
-        str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      # plt.clf()
+      # l1, = plt.plot(y1_test, u2_test[0], label="U2 Test")
+      # plt.legend(handles=[l1])
+      # plt.title("{} Unit NN With Activation Fn {}".format(
+      #   str(num_units_2), str(decoder_activation_1)))
+      # plt.savefig("figs/{}_{}_{}_u_2_{}.png".format(
+      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
 
-      plt.clf()
-      l2, = plt.plot(x0_test, x1_test[0], label="X1 Test")
-      plt.title("{} Unit NN With Activation Fn {}".format(
-        str(num_units_1), str(activation_fn_1)))
-      plt.legend(handles=[l2])
-      plt.savefig("figs/{}_{}_{}_x_1_{}.png".format(
-        str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      # plt.clf()
+      # l2, = plt.plot(x0_test, x1_test[0], label="X1 Test")
+      # plt.title("{} Unit NN With Activation Fn {}".format(
+      #   str(num_units_1), str(decoder_activation_2)))
+      # plt.legend(handles=[l2])
+      # plt.savefig("figs/{}_{}_{}_x_1_{}.png".format(
+      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+
+
+def cartesian_product(*arrays): 
+  return itertools.product(*arrays)
 
 if __name__ == "__main__":
   #learning_rates = [0.01, 0.001, 0.0001, 0.005]
-  learning_rates = [1e-5, 1e-4]
+  
+  diemsions = [1]
+  k_squared_vals = [0.5]
+  learning_rates = [5e-5]
+  num_epochs = [500]
+  batch_size = [1000]
+  x_stddeviations = [5]
+  encoder_activation_1s = [tf.nn.sigmoid]
+  encoder_activation_2s = [tf.identity]
+  decoder_activation_1s = [tf.nn.sigmoid]
+  decoder_activation_2s = [tf.identity]
   num_units_1s = [150, 250]
-  num_units_2s = [30, 150]
-  optimizers = [tf.train.AdamOptimizer]
-  activation_fn_1 = tf.nn.sigmoid
-  activation_fn_2 = tf.nn.sigmoid
-
-  k_squared = float(sys.argv[1])
-  num_epochs = int(sys.argv[2])
-  run_num = 1
-  x0_stddev = 5
+  num_units_2s = [30, 100, 250]
   decay_rates = [1 - 1e-3]
+  test_average_sizes = [100]
+  optimizers = [tf.train.AdamOptimizer]
 
-  for lr in learning_rates:
-    for decay_rate in decay_rates:
-      for n_units_1 in num_units_1s:
-        for n_units_2 in num_units_2s:
-          for optimizer in optimizers: 
-            np.random.seed(run_num)
-            print('RUN NUMBER {}'.format(run_num))
-            print('Numpy random seed {}'.format(run_num))
-            print('Initial learning rate {}'.format(lr))
-            print('GD Optimizier {}'.format(optimizer))
-            print('Decay rate: {} is UNUSED'.format(decay_rate))
-            print('N_units_1: {}'.format(n_units_1))
-            print('N_units_2: {}'.format(n_units_2))
-            print('Activation_fn_1: {}, activation_fn_2: {}'.format(activation_fn_1, activation_fn_2))
-            print('k_squared: {}'.format(k_squared))
-            print('x0 standard deviation: {}'.format(x0_stddev))
-            print('Number of epochs: {}'.format(num_epochs))
-            print('-----------------------------------------------\n')
-            neural_net_run(m = 1, k_sq = k_squared, learning_rate = lr, epochs = num_epochs, batch_size = 1000, 
-              x_stddev = x0_stddev, activation_fn_1 = activation_fn_1, activation_fn_2 = activation_fn_2, num_units_1 = n_units_1, 
-              num_units_2 = n_units_2, decay = decay_rate, test_averaging = 10000, optimizer_func = optimizer)
-            print('-----------------------------------------------\n')
-            run_num += 1
+  
+  run_num = 1
+  
+  
+  
+
+  all_hyperparam_tuples = cartesian_product(diemsions, k_squared_vals,
+    learning_rates, num_epochs, batch_size, x_stddeviations, encoder_activation_1s,
+    encoder_activation_2s, decoder_activation_1s, decoder_activation_2s, num_units_1s, 
+    num_units_2s, decay_rates, test_average_sizes, optimizers)
+  
+  for tup in all_hyperparam_tuples: 
+    print(tup)
+
+  #   def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
+  # encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
+  # num_units_1, num_units_2, decay, test_averaging, optimizer_func):
+
+  #TODO replace nested for loops with better function
+  # for lr in learning_rates:
+  #   for decay_rate in decay_rates:
+  #     for n_units_1 in num_units_1s:
+  #       for n_units_2 in num_units_2s:
+  #         for activation_fn_1 in first_activations: 
+  #           np.random.seed(run_num)
+  #           print('RUN NUMBER {}'.format(run_num))
+  #           print('Numpy random seed {}'.format(run_num))
+  #           print('Initial learning rate {}'.format(lr))
+  #           print('GD Optimizier {}'.format(optimizer))
+  #           print('Decay rate: {} is UNUSED'.format(decay_rate))
+  #           print('N_units_1: {}'.format(n_units_1))
+  #           print('N_units_2: {}'.format(n_units_2))
+  #           print('Activation_fn_1: {}, activation_fn_2: {}'.format(activation_fn_1, activation_fn_2))
+  #           print('k_squared: {}'.format(k_squared))
+  #           print('x0 standard deviation: {}'.format(x0_stddev))
+  #           print('Number of epochs: {}'.format(num_epochs))
+  #           print('-----------------------------------------------\n')
+  #           neural_net_run(m = 1, k_sq = k_squared, learning_rate = lr, epochs = num_epochs, batch_size = 1000, 
+  #             x_stddev = x0_stddev, activation_fn_1 = activation_fn_1, activation_fn_2 = activation_fn_2, num_units_1 = n_units_1, 
+  #             num_units_2 = n_units_2, decay = decay_rate, test_averaging = 10000, optimizer_func = optimizer)
+  #           print('-----------------------------------------------\n')
+  #           run_num += 1
