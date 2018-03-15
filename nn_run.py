@@ -70,6 +70,7 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   # optimizer = tf.train.GradientDescentOptimizer(learning_rate=adaptive_learning_rate).minimize(wits_cost)
 
   init_op = tf.global_variables_initializer()
+  print_step = int(epochs/50) + 1
 
   with tf.Session() as sess:
       sess.run(init_op)
@@ -97,7 +98,7 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
           feed_dict={x0: x_batch, z: z_batch,
                adaptive_learning_rate: current_lr})
 
-          if step % int(epochs/50) == 0:
+          if step % print_step == 0:
               print("step: {}, loss: {}, lr: {}".format(step, val, current_lr))
 
     # Test over a continuous range of X
@@ -131,30 +132,33 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
       total_cost = np.sum(wits_cost_test) / total_density
       print('Mean loss over {} points is {}'.format(num_x0_points, total_cost))
 
-      #PLOTTING. Unnecessary for now because we're just doing hyperparameter search
-      #TODO fix activation function names
-      # l1, = plt.plot(x0_test, u1_test[0], label="U1 Test")
-      # plt.legend(handles=[l1])
-      # plt.title("{} Unit NN With Activation Fn {}".format(
-      #   str(num_units_1), str(encoder_activation_1)))
-      # plt.savefig("figs/{}_{}_{}_u_1_{}.png".format(
-      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      # PLOTTING. Unnecessary for now because we're just doing hyperparameter search
+      # TODO fix activation function names
+      l1, = plt.plot(x0_test, u1_test[0], label="U1 Test")
+      plt.legend(handles=[l1])
+      plt.title("{} Unit NN With Activation Fns {}, {}".format(
+        str(num_units_1), str(encoder_activation_1), str(decoder_activation_1)))
+      plt.savefig("figs/x0vsu1_nu1_{}_nu2_{}_ksq_{}_f1_{}_f3_{}.png".format(
+        str(num_units_1), str(num_units_2) ,str(k_sq), 
+        str(encoder_activation_1), str(decoder_activation_1)))
 
-      # plt.clf()
-      # l1, = plt.plot(y1_test, u2_test[0], label="U2 Test")
-      # plt.legend(handles=[l1])
-      # plt.title("{} Unit NN With Activation Fn {}".format(
-      #   str(num_units_2), str(decoder_activation_1)))
-      # plt.savefig("figs/{}_{}_{}_u_2_{}.png".format(
-      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      plt.clf()
+      l1, = plt.plot(y1_test, u2_test[0], label="U2 Test")
+      plt.legend(handles=[l1])
+      plt.title("{} Unit NN With Activation Fns, {}, {}".format(
+        str(num_units_2), str(encoder_activation_1), str(decoder_activation_1)))
+      plt.savefig("figs/y1vsu2_nu1_{}_nu2_{}_ksq_{}_f1_{}_f3_{}.png".format(
+        str(num_units_1), str(num_units_2) ,str(k_sq), 
+        str(encoder_activation_1), str(decoder_activation_1)))
 
-      # plt.clf()
-      # l2, = plt.plot(x0_test, x1_test[0], label="X1 Test")
-      # plt.title("{} Unit NN With Activation Fn {}".format(
-      #   str(num_units_1), str(decoder_activation_2)))
-      # plt.legend(handles=[l2])
-      # plt.savefig("figs/{}_{}_{}_x_1_{}.png".format(
-      #   str(learning_rate), str(num_units_1), str(num_units_2) ,str(k_sq)))
+      plt.clf()
+      l2, = plt.plot(x0_test, x1_test[0], label="X1 Test")
+      plt.title("{} Unit NN With Activation Fns {}, {}".format(
+        str(num_units_1), str(encoder_activation_1), str(decoder_activation_1)))
+      plt.legend(handles=[l2])
+      plt.savefig("figs/x0vsx1_nu1_{}_nu2_{}_ksq_{}_f1_{}_f3_{}.png".format(
+        str(num_units_1), str(num_units_2) ,str(k_sq), 
+        str(encoder_activation_1), str(decoder_activation_1)))
 
 
 def cartesian_product(*arrays): 
@@ -164,19 +168,19 @@ if __name__ == "__main__":
   #learning_rates = [0.01, 0.001, 0.0001, 0.005]
   
   diemsions = [1]
-  k_squared_vals = [0.5]
+  k_squared_vals = [0.04]
   learning_rates = [5e-5]
-  num_epochs = [50000]
+  num_epochs = [10]
   batch_size = [500]
   x_stddeviations = [5]
   encoder_activation_1s = [tf.nn.sigmoid, tf.nn.relu]
-  encoder_activation_2s = [tf.identity, tf.nn.sigmoid]
-  decoder_activation_1s = [tf.nn.sigmoid]
-  decoder_activation_2s = [tf.identity, tf.nn.sigmoid]
+  encoder_activation_2s = [tf.identity]
+  decoder_activation_1s = [tf.nn.sigmoid, tf.nn.relu]
+  decoder_activation_2s = [tf.identity]
   num_units_1s = [150]
   num_units_2s = [30]
   decay_rates = [1 - 1e-3]
-  test_average_sizes = [100]
+  test_average_sizes = [1000]
   optimizers = [tf.train.AdamOptimizer]
 
   
