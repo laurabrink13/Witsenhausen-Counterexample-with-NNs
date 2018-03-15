@@ -55,7 +55,10 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
 
   adaptive_learning_rate = tf.placeholder_with_default(learning_rate, [])
 
-  optimizer = optimizer_func(adaptive_learning_rate).minimize(wits_cost)
+  if optimizer_func == tf.train.AdamOptimizer: 
+    optimizer = tf.train.AdamOptimizer(adaptive_learning_rate, epsilon=1e-4).minimize(wits_cost)
+  else:
+    optimizer = optimizer_func(adaptive_learning_rate).minimize(wits_cost)
   # optimizer = tf.train.GradientDescentOptimizer(learning_rate=adaptive_learning_rate).minimize(wits_cost)
 
   init_op = tf.global_variables_initializer()
@@ -75,48 +78,50 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
           # current_lr = learning_rate/(1 + (1 - decay)*step)
           #before
           #current_lr = learning_rate * (decay**step)
+          # if np.random.randint(int(epochs/5)) == 25:
+          #   #randomly perturb by taking a wildly large step. 
+          #   print('RANDOM PERTURBATION AT STEP: {}'.format(step))
+          #   current_lr = 0.5
+          # else: 
           current_lr = learning_rate
           _, val = sess.run(
           [optimizer, wits_cost],
           feed_dict={x0: x_batch, z: z_batch,
                adaptive_learning_rate: current_lr})
 
-          if step % 1000 == 0:
+          if step % 100 == 0:
               print("step: {}, loss: {}, lr: {}".format(step, val, current_lr))
 
     # Test over a continuous range of X
-      x0_test = np.linspace(-3*x_stddev, 3*x_stddev, num=100)
+      num_x0_points = 300
+      x0_test = np.linspace(-3*x_stddev, 3*x_stddev, num=300)
       y1_test = x0_test
-      u1_test, u2_test, x1_test, wits_cost_test = np.zeros((1, 100)), np.zeros((1, 100)), np.zeros((1, 100)), np.zeros((1, 100))
-      # wits_cost_test = np.zeros((1, 100))
+      u1_test, u2_test, x1_test, wits_cost_test = np.zeros((1, 300)), np.zeros((1, 300)), np.zeros((1, 300)), np.zeros((1, 300))
       wits_cost_total = 0.0 
       x0_distribution = scipy.stats.norm(loc=0.0, scale=x_stddev)
-      for i in range(100):
+      total_density = 0.0
+      for i in range(300):
           u1t, u2t, x1t, wits_cost_t  = 0, 0, 0, 0
           # wits_cost_t  = 0
           for _ in range(test_averaging):
-            # wits_cost_tmp = sess.run(
-            #       [wits_cost],
-            #       feed_dict={x0: x0_test[i].reshape((1, 1)),
-            #       z: np.random.normal(size=(1, 1), scale=1)
-            #       #y1: y1_test[i].reshape((1, 1)) #don't pass in y_1
-            # })
             u1tmp, u2tmp, x1tmp, wits_cost_tmp = sess.run(
                   [u1, u2, x1, wits_cost],
                   feed_dict={x0: x0_test[i].reshape((1, 1)),
                   z: np.random.normal(size=(1, 1), scale=1)
-                  #y1: y1_test[i].reshape((1, 1)) #don't pass in y_1
             })
             wits_cost_t += wits_cost_tmp
             u1t += u1tmp
             u2t += u2tmp
             x1t += x1tmp
-          scaled_wits_cost = wits_cost_t * x0_distribution.pdf(x0_test[i])
+          x0_density = x0_distribution.pdf(x0_test[i])
+          total_density += x0_density
+          scaled_wits_cost = wits_cost_t * x0_density
           wits_cost_test[0, i] = scaled_wits_cost / test_averaging
           u1_test[0, i] = u1t / test_averaging
           u2_test[0, i] = -u2t / test_averaging
           x1_test[0, i] = x1t / test_averaging
-      print('Mean loss is {}'.format(np.sum(wits_cost_test)))
+      total_cost = np.sum(wits_cost_test)
+      print('Mean loss is {}'.format(total_cost / total_density))
 
       #PLOTTING. Unnecessary for now because we're just doing hyperparameter search
       # l1, = plt.plot(x0_test, u1_test[0], label="U1 Test")
@@ -144,16 +149,17 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
 
 if __name__ == "__main__":
   #learning_rates = [0.01, 0.001, 0.0001, 0.005]
-  learning_rates = [5e-5]
-  num_units_1s = [100, 150]
-  num_units_2s = [30]
-  optimizers = [tf.train.AdamOptimizer, tf.train.RMSPropOptimizer, tf.train.GradientDescentOptimizer]
+  learning_rates = [1e-5, 1e-4]
+  num_units_1s = [150, 250]
+  num_units_2s = [30, 150]
+  optimizers = [tf.train.AdamOptimizer]
   activation_fn_1 = tf.nn.sigmoid
   activation_fn_2 = tf.nn.sigmoid
 
   k_squared = float(sys.argv[1])
   num_epochs = int(sys.argv[2])
   run_num = 1
+  x0_stddev = 5
   decay_rates = [1 - 1e-3]
 
   for lr in learning_rates:
@@ -171,10 +177,11 @@ if __name__ == "__main__":
             print('N_units_2: {}'.format(n_units_2))
             print('Activation_fn_1: {}, activation_fn_2: {}'.format(activation_fn_1, activation_fn_2))
             print('k_squared: {}'.format(k_squared))
+            print('x0 standard deviation: {}'.format(x0_stddev))
             print('Number of epochs: {}'.format(num_epochs))
             print('-----------------------------------------------\n')
             neural_net_run(m = 1, k_sq = k_squared, learning_rate = lr, epochs = num_epochs, batch_size = 100, 
-              x_stddev = 3, activation_fn_1 = activation_fn_1, activation_fn_2 = activation_fn_2, num_units_1 = n_units_1, 
+              x_stddev = x0_stddev, activation_fn_1 = activation_fn_1, activation_fn_2 = activation_fn_2, num_units_1 = n_units_1, 
               num_units_2 = n_units_2, decay = decay_rate, test_averaging = 100, optimizer_func = optimizer)
             print('-----------------------------------------------\n')
             run_num += 1
