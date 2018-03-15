@@ -70,7 +70,7 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   # optimizer = tf.train.GradientDescentOptimizer(learning_rate=adaptive_learning_rate).minimize(wits_cost)
 
   init_op = tf.global_variables_initializer()
-  print_step = int(epochs/50) + 1
+  print_step = int(epochs/50)
 
   with tf.Session() as sess:
       sess.run(init_op)
@@ -170,12 +170,12 @@ if __name__ == "__main__":
   diemsions = [1]
   k_squared_vals = [0.04]
   learning_rates = [5e-5]
-  num_epochs = [10]
+  num_epochs = [70000]
   batch_size = [500]
   x_stddeviations = [5]
   encoder_activation_1s = [tf.nn.sigmoid, tf.nn.relu]
   encoder_activation_2s = [tf.identity]
-  decoder_activation_1s = [tf.nn.sigmoid, tf.nn.relu]
+  decoder_activation_1s = [tf.nn.relu]
   decoder_activation_2s = [tf.identity]
   num_units_1s = [150]
   num_units_2s = [30]
