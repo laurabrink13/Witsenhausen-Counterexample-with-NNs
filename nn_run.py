@@ -97,18 +97,18 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
           feed_dict={x0: x_batch, z: z_batch,
                adaptive_learning_rate: current_lr})
 
-          if step % 100 == 0:
+          if step % int(epochs/50) == 0:
               print("step: {}, loss: {}, lr: {}".format(step, val, current_lr))
 
     # Test over a continuous range of X
       num_x0_points = 300
-      x0_test = np.linspace(-3*x_stddev, 3*x_stddev, num=300)
+      x0_test = np.linspace(-3*x_stddev, 3*x_stddev, num=num_x0_points)
       y1_test = x0_test
-      u1_test, u2_test, x1_test, wits_cost_test = np.zeros((1, 300)), np.zeros((1, 300)), np.zeros((1, 300)), np.zeros((1, 300))
+      u1_test, u2_test, x1_test, wits_cost_test = np.zeros((1, num_x0_points)), np.zeros((1, num_x0_points)), np.zeros((1, num_x0_points)), np.zeros((1, num_x0_points))
       wits_cost_total = 0.0 
       x0_distribution = scipy.stats.norm(loc=0.0, scale=x_stddev)
       total_density = 0.0
-      for i in range(300):
+      for i in range(num_x0_points):
           u1t, u2t, x1t, wits_cost_t  = 0, 0, 0, 0
           # wits_cost_t  = 0
           for _ in range(test_averaging):
@@ -128,8 +128,8 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
           u1_test[0, i] = u1t / test_averaging
           u2_test[0, i] = -u2t / test_averaging
           x1_test[0, i] = x1t / test_averaging
-      total_cost = np.sum(wits_cost_test)
-      print('Mean loss is {}'.format(total_cost / total_density))
+      total_cost = np.sum(wits_cost_test) / total_density
+      print('Mean loss over {} points is {}'.format(num_x0_points, total_cost))
 
       #PLOTTING. Unnecessary for now because we're just doing hyperparameter search
       #TODO fix activation function names
@@ -166,13 +166,13 @@ if __name__ == "__main__":
   diemsions = [1]
   k_squared_vals = [0.5]
   learning_rates = [5e-5]
-  num_epochs = [500]
-  batch_size = [1000]
+  num_epochs = [50000]
+  batch_size = [500]
   x_stddeviations = [5]
-  encoder_activation_1s = [tf.nn.sigmoid]
-  encoder_activation_2s = [tf.identity]
+  encoder_activation_1s = [tf.nn.sigmoid, tf.nn.relu]
+  encoder_activation_2s = [tf.identity, tf.nn.sigmoid]
   decoder_activation_1s = [tf.nn.sigmoid]
-  decoder_activation_2s = [tf.identity]
+  decoder_activation_2s = [tf.identity, tf.nn.sigmoid]
   num_units_1s = [150]
   num_units_2s = [30]
   decay_rates = [1 - 1e-3]
@@ -181,9 +181,6 @@ if __name__ == "__main__":
 
   
   run_num = 1
-  
-  
-  
 
   all_hyperparam_tuples = cartesian_product(diemsions, k_squared_vals,
     learning_rates, num_epochs, batch_size, x_stddeviations, encoder_activation_1s,
@@ -195,10 +192,10 @@ if __name__ == "__main__":
     #Unroll the huge tuple of hyperparameters.
     #I apologize for the very long line of code. RIP pep8 - Akhil
     m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func = tup
-
-    np.random.seed(run_num)
+    seed = run_num + 50
+    np.random.seed(seed)
     print('RUN NUMBER {}'.format(run_num))
-    print('Numpy random seed {}'.format(run_num))
+    print('Numpy random seed {}'.format(seed))
     print('HYPERPARAMETERS ARE: ')
     print('m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, '
       + 'decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func')
@@ -209,32 +206,3 @@ if __name__ == "__main__":
       num_units_1, num_units_2, decay, test_averaging, optimizer_func)
     print('-----------------------------------------------\n')
     run_num += 1
-
-  #   def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
-  # encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
-  # num_units_1, num_units_2, decay, test_averaging, optimizer_func):
-
-  #TODO replace nested for loops with better function
-  # for lr in learning_rates:
-  #   for decay_rate in decay_rates:
-  #     for n_units_1 in num_units_1s:
-  #       for n_units_2 in num_units_2s:
-  #         for activation_fn_1 in first_activations: 
-  #           np.random.seed(run_num)
-  #           print('RUN NUMBER {}'.format(run_num))
-  #           print('Numpy random seed {}'.format(run_num))
-  #           print('Initial learning rate {}'.format(lr))
-  #           print('GD Optimizier {}'.format(optimizer))
-  #           print('Decay rate: {} is UNUSED'.format(decay_rate))
-  #           print('N_units_1: {}'.format(n_units_1))
-  #           print('N_units_2: {}'.format(n_units_2))
-  #           print('Activation_fn_1: {}, activation_fn_2: {}'.format(activation_fn_1, activation_fn_2))
-  #           print('k_squared: {}'.format(k_squared))
-  #           print('x0 standard deviation: {}'.format(x0_stddev))
-  #           print('Number of epochs: {}'.format(num_epochs))
-  #           print('-----------------------------------------------\n')
-  #           neural_net_run(m = 1, k_sq = k_squared, learning_rate = lr, epochs = num_epochs, batch_size = 1000, 
-  #             x_stddev = x0_stddev, activation_fn_1 = activation_fn_1, activation_fn_2 = activation_fn_2, num_units_1 = n_units_1, 
-  #             num_units_2 = n_units_2, decay = decay_rate, test_averaging = 10000, optimizer_func = optimizer)
-  #           print('-----------------------------------------------\n')
-  #           run_num += 1
