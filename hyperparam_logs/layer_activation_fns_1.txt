@@ -1,0 +1,480 @@
+RUN NUMBER 1
+Numpy random seed 51
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function sigmoid at 0x117de10d0>, <function identity at 0x1177c9268>, <function sigmoid at 0x117de10d0>, <function identity at 0x1177c9268>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 24.110042572021484, lr: 5e-05
+step: 1000, loss: 11.962931632995605, lr: 5e-05
+step: 2000, loss: 7.638628005981445, lr: 5e-05
+step: 3000, loss: 6.759442329406738, lr: 5e-05
+step: 4000, loss: 6.224002838134766, lr: 5e-05
+step: 5000, loss: 4.81913948059082, lr: 5e-05
+step: 6000, loss: 4.013398170471191, lr: 5e-05
+step: 7000, loss: 3.2188918590545654, lr: 5e-05
+step: 8000, loss: 2.3199286460876465, lr: 5e-05
+step: 9000, loss: 1.8234879970550537, lr: 5e-05
+step: 10000, loss: 2.034295082092285, lr: 5e-05
+step: 11000, loss: 1.5730979442596436, lr: 5e-05
+step: 12000, loss: 1.637898564338684, lr: 5e-05
+step: 13000, loss: 1.5207653045654297, lr: 5e-05
+step: 14000, loss: 1.3444504737854004, lr: 5e-05
+step: 15000, loss: 1.1197400093078613, lr: 5e-05
+step: 16000, loss: 1.1712177991867065, lr: 5e-05
+step: 17000, loss: 1.2882890701293945, lr: 5e-05
+step: 18000, loss: 1.2779089212417603, lr: 5e-05
+step: 19000, loss: 1.2834436893463135, lr: 5e-05
+step: 20000, loss: 1.2678372859954834, lr: 5e-05
+step: 21000, loss: 1.3243831396102905, lr: 5e-05
+step: 22000, loss: 1.1745418310165405, lr: 5e-05
+step: 23000, loss: 1.157151222229004, lr: 5e-05
+step: 24000, loss: 1.2797431945800781, lr: 5e-05
+step: 25000, loss: 1.0228029489517212, lr: 5e-05
+step: 26000, loss: 0.9934341907501221, lr: 5e-05
+step: 27000, loss: 1.0151290893554688, lr: 5e-05
+step: 28000, loss: 1.160575270652771, lr: 5e-05
+step: 29000, loss: 1.078667402267456, lr: 5e-05
+step: 30000, loss: 0.9975155591964722, lr: 5e-05
+step: 31000, loss: 1.1045010089874268, lr: 5e-05
+step: 32000, loss: 0.9583510160446167, lr: 5e-05
+step: 33000, loss: 1.0566859245300293, lr: 5e-05
+step: 34000, loss: 1.0204102993011475, lr: 5e-05
+step: 35000, loss: 1.1659656763076782, lr: 5e-05
+step: 36000, loss: 1.1012636423110962, lr: 5e-05
+step: 37000, loss: 0.9920839667320251, lr: 5e-05
+step: 38000, loss: 1.107177495956421, lr: 5e-05
+step: 39000, loss: 1.0865379571914673, lr: 5e-05
+step: 40000, loss: 1.0735419988632202, lr: 5e-05
+step: 41000, loss: 1.1144062280654907, lr: 5e-05
+step: 42000, loss: 1.041309118270874, lr: 5e-05
+step: 43000, loss: 0.9090144038200378, lr: 5e-05
+step: 44000, loss: 0.9723204374313354, lr: 5e-05
+step: 45000, loss: 0.975580096244812, lr: 5e-05
+step: 46000, loss: 0.9786095023155212, lr: 5e-05
+step: 47000, loss: 0.9582495093345642, lr: 5e-05
+step: 48000, loss: 0.9851409196853638, lr: 5e-05
+step: 49000, loss: 0.964231550693512, lr: 5e-05
+Mean loss over 300 points is 0.002034468387933476
+-----------------------------------------------
+
+RUN NUMBER 2
+Numpy random seed 52
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function sigmoid at 0x117de10d0>, <function identity at 0x1177c9268>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 22.05027198791504, lr: 5e-05
+step: 1000, loss: 12.564438819885254, lr: 5e-05
+step: 2000, loss: 7.5856733322143555, lr: 5e-05
+step: 3000, loss: 7.782122611999512, lr: 5e-05
+step: 4000, loss: 8.237464904785156, lr: 5e-05
+step: 5000, loss: 8.32186508178711, lr: 5e-05
+step: 6000, loss: 6.739895820617676, lr: 5e-05
+step: 7000, loss: 7.866467475891113, lr: 5e-05
+step: 8000, loss: 7.970324993133545, lr: 5e-05
+step: 9000, loss: 7.77459716796875, lr: 5e-05
+step: 10000, loss: 7.394147872924805, lr: 5e-05
+step: 11000, loss: 8.674769401550293, lr: 5e-05
+step: 12000, loss: 7.1095709800720215, lr: 5e-05
+step: 13000, loss: 8.294910430908203, lr: 5e-05
+step: 14000, loss: 7.151252746582031, lr: 5e-05
+step: 15000, loss: 7.122489929199219, lr: 5e-05
+step: 16000, loss: 7.846579551696777, lr: 5e-05
+step: 17000, loss: 7.723283767700195, lr: 5e-05
+step: 18000, loss: 7.074181079864502, lr: 5e-05
+step: 19000, loss: 6.990501880645752, lr: 5e-05
+step: 20000, loss: 6.3599348068237305, lr: 5e-05
+step: 21000, loss: 7.207643508911133, lr: 5e-05
+step: 22000, loss: 7.080779075622559, lr: 5e-05
+step: 23000, loss: 7.420637130737305, lr: 5e-05
+step: 24000, loss: 7.61967134475708, lr: 5e-05
+step: 25000, loss: 7.933999538421631, lr: 5e-05
+step: 26000, loss: 7.866042137145996, lr: 5e-05
+step: 27000, loss: 7.677399158477783, lr: 5e-05
+step: 28000, loss: 7.1378679275512695, lr: 5e-05
+step: 29000, loss: 6.528047561645508, lr: 5e-05
+step: 30000, loss: 6.928648948669434, lr: 5e-05
+step: 31000, loss: 7.381352424621582, lr: 5e-05
+step: 32000, loss: 6.803152084350586, lr: 5e-05
+step: 33000, loss: 7.891702651977539, lr: 5e-05
+step: 34000, loss: 6.726988792419434, lr: 5e-05
+step: 35000, loss: 7.565121650695801, lr: 5e-05
+step: 36000, loss: 6.780734539031982, lr: 5e-05
+step: 37000, loss: 7.514078140258789, lr: 5e-05
+step: 38000, loss: 6.987286567687988, lr: 5e-05
+step: 39000, loss: 7.60231876373291, lr: 5e-05
+step: 40000, loss: 7.358033180236816, lr: 5e-05
+step: 41000, loss: 7.871244430541992, lr: 5e-05
+step: 42000, loss: 6.95839786529541, lr: 5e-05
+step: 43000, loss: 7.835338592529297, lr: 5e-05
+step: 44000, loss: 7.539262771606445, lr: 5e-05
+step: 45000, loss: 7.703298568725586, lr: 5e-05
+step: 46000, loss: 7.704251766204834, lr: 5e-05
+step: 47000, loss: 7.266395568847656, lr: 5e-05
+step: 48000, loss: 7.763124942779541, lr: 5e-05
+step: 49000, loss: 7.752643585205078, lr: 5e-05
+Mean loss over 300 points is 0.01425223894383633
+-----------------------------------------------
+
+RUN NUMBER 3
+Numpy random seed 53
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, <function identity at 0x1177c9268>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 25.185136795043945, lr: 5e-05
+step: 1000, loss: 15.938923835754395, lr: 5e-05
+step: 2000, loss: 10.909097671508789, lr: 5e-05
+step: 3000, loss: 9.784284591674805, lr: 5e-05
+step: 4000, loss: 7.315457820892334, lr: 5e-05
+step: 5000, loss: 6.767268180847168, lr: 5e-05
+step: 6000, loss: 3.836007595062256, lr: 5e-05
+step: 7000, loss: 3.277348279953003, lr: 5e-05
+step: 8000, loss: 2.859661340713501, lr: 5e-05
+step: 9000, loss: 2.702936887741089, lr: 5e-05
+step: 10000, loss: 2.3614754676818848, lr: 5e-05
+step: 11000, loss: 2.1179933547973633, lr: 5e-05
+step: 12000, loss: 1.9400348663330078, lr: 5e-05
+step: 13000, loss: 2.052626371383667, lr: 5e-05
+step: 14000, loss: 1.9306912422180176, lr: 5e-05
+step: 15000, loss: 1.4603807926177979, lr: 5e-05
+step: 16000, loss: 1.3307901620864868, lr: 5e-05
+step: 17000, loss: 1.210517168045044, lr: 5e-05
+step: 18000, loss: 1.2710821628570557, lr: 5e-05
+step: 19000, loss: 1.3762668371200562, lr: 5e-05
+step: 20000, loss: 1.0942407846450806, lr: 5e-05
+step: 21000, loss: 1.1117860078811646, lr: 5e-05
+step: 22000, loss: 1.1270090341567993, lr: 5e-05
+step: 23000, loss: 1.053200125694275, lr: 5e-05
+step: 24000, loss: 1.2602177858352661, lr: 5e-05
+step: 25000, loss: 0.9697458148002625, lr: 5e-05
+step: 26000, loss: 1.0660226345062256, lr: 5e-05
+step: 27000, loss: 1.2019175291061401, lr: 5e-05
+step: 28000, loss: 1.030449628829956, lr: 5e-05
+step: 29000, loss: 1.0331043004989624, lr: 5e-05
+step: 30000, loss: 1.0049573183059692, lr: 5e-05
+step: 31000, loss: 1.100277304649353, lr: 5e-05
+step: 32000, loss: 1.0009514093399048, lr: 5e-05
+step: 33000, loss: 1.0145121812820435, lr: 5e-05
+step: 34000, loss: 1.0813030004501343, lr: 5e-05
+step: 35000, loss: 0.9757930040359497, lr: 5e-05
+step: 36000, loss: 1.012392520904541, lr: 5e-05
+step: 37000, loss: 0.9806227087974548, lr: 5e-05
+step: 38000, loss: 1.0627543926239014, lr: 5e-05
+step: 39000, loss: 0.8612055778503418, lr: 5e-05
+step: 40000, loss: 0.9495585560798645, lr: 5e-05
+step: 41000, loss: 1.0545005798339844, lr: 5e-05
+step: 42000, loss: 1.0104247331619263, lr: 5e-05
+step: 43000, loss: 1.063468098640442, lr: 5e-05
+step: 44000, loss: 1.0727626085281372, lr: 5e-05
+step: 45000, loss: 0.9451391100883484, lr: 5e-05
+step: 46000, loss: 1.0458399057388306, lr: 5e-05
+step: 47000, loss: 1.0768647193908691, lr: 5e-05
+step: 48000, loss: 1.2451722621917725, lr: 5e-05
+step: 49000, loss: 0.9670947194099426, lr: 5e-05
+Mean loss over 300 points is 0.002023711177629669
+-----------------------------------------------
+
+RUN NUMBER 4
+Numpy random seed 54
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 24.18502426147461, lr: 5e-05
+step: 1000, loss: 20.0599308013916, lr: 5e-05
+step: 2000, loss: 20.131668090820312, lr: 5e-05
+step: 3000, loss: 19.82944107055664, lr: 5e-05
+step: 4000, loss: 17.64103889465332, lr: 5e-05
+step: 5000, loss: 16.16408920288086, lr: 5e-05
+step: 6000, loss: 18.56273078918457, lr: 5e-05
+step: 7000, loss: 19.26666259765625, lr: 5e-05
+step: 8000, loss: 16.617258071899414, lr: 5e-05
+step: 9000, loss: 20.45754051208496, lr: 5e-05
+step: 10000, loss: 19.716108322143555, lr: 5e-05
+step: 11000, loss: 19.771209716796875, lr: 5e-05
+step: 12000, loss: 17.811115264892578, lr: 5e-05
+step: 13000, loss: 16.357210159301758, lr: 5e-05
+step: 14000, loss: 18.89572525024414, lr: 5e-05
+step: 15000, loss: 16.027368545532227, lr: 5e-05
+step: 16000, loss: 17.24786949157715, lr: 5e-05
+step: 17000, loss: 17.753875732421875, lr: 5e-05
+step: 18000, loss: 16.434728622436523, lr: 5e-05
+step: 19000, loss: 18.818693161010742, lr: 5e-05
+step: 20000, loss: 18.66242027282715, lr: 5e-05
+step: 21000, loss: 17.279497146606445, lr: 5e-05
+step: 22000, loss: 19.02923583984375, lr: 5e-05
+step: 23000, loss: 18.455659866333008, lr: 5e-05
+step: 24000, loss: 17.72874641418457, lr: 5e-05
+step: 25000, loss: 17.990604400634766, lr: 5e-05
+step: 26000, loss: 20.017169952392578, lr: 5e-05
+step: 27000, loss: 16.59565544128418, lr: 5e-05
+step: 28000, loss: 16.45733070373535, lr: 5e-05
+step: 29000, loss: 19.303091049194336, lr: 5e-05
+step: 30000, loss: 19.449275970458984, lr: 5e-05
+step: 31000, loss: 17.468751907348633, lr: 5e-05
+step: 32000, loss: 17.42693519592285, lr: 5e-05
+step: 33000, loss: 17.213359832763672, lr: 5e-05
+step: 34000, loss: 18.196422576904297, lr: 5e-05
+step: 35000, loss: 18.506732940673828, lr: 5e-05
+step: 36000, loss: 18.37457275390625, lr: 5e-05
+step: 37000, loss: 16.216655731201172, lr: 5e-05
+step: 38000, loss: 16.967182159423828, lr: 5e-05
+step: 39000, loss: 18.97370147705078, lr: 5e-05
+step: 40000, loss: 19.50826072692871, lr: 5e-05
+step: 41000, loss: 15.82172679901123, lr: 5e-05
+step: 42000, loss: 19.13234519958496, lr: 5e-05
+step: 43000, loss: 18.45872688293457, lr: 5e-05
+step: 44000, loss: 17.416908264160156, lr: 5e-05
+step: 45000, loss: 16.207738876342773, lr: 5e-05
+step: 46000, loss: 17.96340560913086, lr: 5e-05
+step: 47000, loss: 16.256454467773438, lr: 5e-05
+step: 48000, loss: 18.78889274597168, lr: 5e-05
+step: 49000, loss: 16.882949829101562, lr: 5e-05
+Mean loss over 300 points is 0.035391059209120425
+-----------------------------------------------
+
+RUN NUMBER 5
+Numpy random seed 55
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function relu at 0x117c9eb70>, <function identity at 0x1177c9268>, <function sigmoid at 0x117de10d0>, <function identity at 0x1177c9268>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 31.352941513061523, lr: 5e-05
+step: 1000, loss: 8.703983306884766, lr: 5e-05
+step: 2000, loss: 6.854778289794922, lr: 5e-05
+step: 3000, loss: 7.861928462982178, lr: 5e-05
+step: 4000, loss: 6.518664360046387, lr: 5e-05
+step: 5000, loss: 4.3888654708862305, lr: 5e-05
+step: 6000, loss: 3.968475341796875, lr: 5e-05
+step: 7000, loss: 2.70401668548584, lr: 5e-05
+step: 8000, loss: 2.132902145385742, lr: 5e-05
+step: 9000, loss: 2.216874122619629, lr: 5e-05
+step: 10000, loss: 1.7748408317565918, lr: 5e-05
+step: 11000, loss: 1.7019705772399902, lr: 5e-05
+step: 12000, loss: 1.516823649406433, lr: 5e-05
+step: 13000, loss: 1.419169545173645, lr: 5e-05
+step: 14000, loss: 1.1580281257629395, lr: 5e-05
+step: 15000, loss: 1.3173904418945312, lr: 5e-05
+step: 16000, loss: 1.2537834644317627, lr: 5e-05
+step: 17000, loss: 1.2523330450057983, lr: 5e-05
+step: 18000, loss: 1.310529112815857, lr: 5e-05
+step: 19000, loss: 1.1311105489730835, lr: 5e-05
+step: 20000, loss: 1.0243935585021973, lr: 5e-05
+step: 21000, loss: 1.1563752889633179, lr: 5e-05
+step: 22000, loss: 1.2125530242919922, lr: 5e-05
+step: 23000, loss: 1.0561095476150513, lr: 5e-05
+step: 24000, loss: 1.2790354490280151, lr: 5e-05
+step: 25000, loss: 0.982580840587616, lr: 5e-05
+step: 26000, loss: 1.1738207340240479, lr: 5e-05
+step: 27000, loss: 1.0975319147109985, lr: 5e-05
+step: 28000, loss: 1.1068145036697388, lr: 5e-05
+step: 29000, loss: 1.02875554561615, lr: 5e-05
+step: 30000, loss: 1.0630221366882324, lr: 5e-05
+step: 31000, loss: 1.0267781019210815, lr: 5e-05
+step: 32000, loss: 1.186174988746643, lr: 5e-05
+step: 33000, loss: 1.0051366090774536, lr: 5e-05
+step: 34000, loss: 0.9346044063568115, lr: 5e-05
+step: 35000, loss: 1.0823200941085815, lr: 5e-05
+step: 36000, loss: 1.0461727380752563, lr: 5e-05
+step: 37000, loss: 1.0591061115264893, lr: 5e-05
+step: 38000, loss: 0.9343137145042419, lr: 5e-05
+step: 39000, loss: 1.1827208995819092, lr: 5e-05
+step: 40000, loss: 1.1884443759918213, lr: 5e-05
+step: 41000, loss: 1.042275071144104, lr: 5e-05
+step: 42000, loss: 1.01348876953125, lr: 5e-05
+step: 43000, loss: 1.050187110900879, lr: 5e-05
+step: 44000, loss: 1.0761219263076782, lr: 5e-05
+step: 45000, loss: 1.148421049118042, lr: 5e-05
+step: 46000, loss: 1.1069401502609253, lr: 5e-05
+step: 47000, loss: 0.9722980260848999, lr: 5e-05
+step: 48000, loss: 0.9807852506637573, lr: 5e-05
+step: 49000, loss: 1.0208630561828613, lr: 5e-05
+Mean loss over 300 points is 0.0020580733255986306
+-----------------------------------------------
+
+RUN NUMBER 6
+Numpy random seed 56
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function relu at 0x117c9eb70>, <function identity at 0x1177c9268>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 18.479969024658203, lr: 5e-05
+step: 1000, loss: 7.200021743774414, lr: 5e-05
+step: 2000, loss: 7.800692558288574, lr: 5e-05
+step: 3000, loss: 8.763836860656738, lr: 5e-05
+step: 4000, loss: 8.066323280334473, lr: 5e-05
+step: 5000, loss: 8.139405250549316, lr: 5e-05
+step: 6000, loss: 7.930205821990967, lr: 5e-05
+step: 7000, loss: 7.08209228515625, lr: 5e-05
+step: 8000, loss: 6.957357406616211, lr: 5e-05
+step: 9000, loss: 6.771488189697266, lr: 5e-05
+step: 10000, loss: 8.336111068725586, lr: 5e-05
+step: 11000, loss: 7.911269187927246, lr: 5e-05
+step: 12000, loss: 7.18576717376709, lr: 5e-05
+step: 13000, loss: 7.549007415771484, lr: 5e-05
+step: 14000, loss: 7.7645721435546875, lr: 5e-05
+step: 15000, loss: 7.273767471313477, lr: 5e-05
+step: 16000, loss: 7.521306991577148, lr: 5e-05
+step: 17000, loss: 7.3760223388671875, lr: 5e-05
+step: 18000, loss: 6.618350028991699, lr: 5e-05
+step: 19000, loss: 7.011597633361816, lr: 5e-05
+step: 20000, loss: 6.599392414093018, lr: 5e-05
+step: 21000, loss: 7.702420234680176, lr: 5e-05
+step: 22000, loss: 7.633304595947266, lr: 5e-05
+step: 23000, loss: 6.957046031951904, lr: 5e-05
+step: 24000, loss: 7.161235332489014, lr: 5e-05
+step: 25000, loss: 6.944646835327148, lr: 5e-05
+step: 26000, loss: 7.732357978820801, lr: 5e-05
+step: 27000, loss: 7.297491073608398, lr: 5e-05
+step: 28000, loss: 7.557075500488281, lr: 5e-05
+step: 29000, loss: 7.930798053741455, lr: 5e-05
+step: 30000, loss: 7.389006614685059, lr: 5e-05
+step: 31000, loss: 6.972434997558594, lr: 5e-05
+step: 32000, loss: 7.3399810791015625, lr: 5e-05
+step: 33000, loss: 7.264072418212891, lr: 5e-05
+step: 34000, loss: 7.258638381958008, lr: 5e-05
+step: 35000, loss: 6.945537567138672, lr: 5e-05
+step: 36000, loss: 7.752124786376953, lr: 5e-05
+step: 37000, loss: 7.275696754455566, lr: 5e-05
+step: 38000, loss: 6.799705505371094, lr: 5e-05
+step: 39000, loss: 6.561603546142578, lr: 5e-05
+step: 40000, loss: 7.786472320556641, lr: 5e-05
+step: 41000, loss: 7.84037971496582, lr: 5e-05
+step: 42000, loss: 7.08626651763916, lr: 5e-05
+step: 43000, loss: 8.927254676818848, lr: 5e-05
+step: 44000, loss: 7.680240631103516, lr: 5e-05
+step: 45000, loss: 7.3371734619140625, lr: 5e-05
+step: 46000, loss: 6.711901664733887, lr: 5e-05
+step: 47000, loss: 7.62038516998291, lr: 5e-05
+step: 48000, loss: 7.796649932861328, lr: 5e-05
+step: 49000, loss: 6.6085662841796875, lr: 5e-05
+Mean loss over 300 points is 0.014256331143255254
+-----------------------------------------------
+
+RUN NUMBER 7
+Numpy random seed 57
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function relu at 0x117c9eb70>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, <function identity at 0x1177c9268>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 36.40144729614258, lr: 5e-05
+step: 1000, loss: 23.298429489135742, lr: 5e-05
+step: 2000, loss: 20.021854400634766, lr: 5e-05
+step: 3000, loss: 14.457971572875977, lr: 5e-05
+step: 4000, loss: 11.223358154296875, lr: 5e-05
+step: 5000, loss: 8.607399940490723, lr: 5e-05
+step: 6000, loss: 6.762019634246826, lr: 5e-05
+step: 7000, loss: 5.10609769821167, lr: 5e-05
+step: 8000, loss: 3.415825128555298, lr: 5e-05
+step: 9000, loss: 2.990241050720215, lr: 5e-05
+step: 10000, loss: 3.3210654258728027, lr: 5e-05
+step: 11000, loss: 2.475360870361328, lr: 5e-05
+step: 12000, loss: 2.220410108566284, lr: 5e-05
+step: 13000, loss: 2.089867115020752, lr: 5e-05
+step: 14000, loss: 1.536913514137268, lr: 5e-05
+step: 15000, loss: 1.5762006044387817, lr: 5e-05
+step: 16000, loss: 1.4170310497283936, lr: 5e-05
+step: 17000, loss: 1.4742947816848755, lr: 5e-05
+step: 18000, loss: 1.4089112281799316, lr: 5e-05
+step: 19000, loss: 1.202303409576416, lr: 5e-05
+step: 20000, loss: 1.2651572227478027, lr: 5e-05
+step: 21000, loss: 1.186751365661621, lr: 5e-05
+step: 22000, loss: 1.197761058807373, lr: 5e-05
+step: 23000, loss: 1.1890345811843872, lr: 5e-05
+step: 24000, loss: 1.264458179473877, lr: 5e-05
+step: 25000, loss: 1.2661806344985962, lr: 5e-05
+step: 26000, loss: 1.1932708024978638, lr: 5e-05
+step: 27000, loss: 1.157977819442749, lr: 5e-05
+step: 28000, loss: 1.2370548248291016, lr: 5e-05
+step: 29000, loss: 1.1825708150863647, lr: 5e-05
+step: 30000, loss: 1.0837750434875488, lr: 5e-05
+step: 31000, loss: 1.0868555307388306, lr: 5e-05
+step: 32000, loss: 0.9982450008392334, lr: 5e-05
+step: 33000, loss: 1.201554775238037, lr: 5e-05
+step: 34000, loss: 1.1477808952331543, lr: 5e-05
+step: 35000, loss: 1.1497833728790283, lr: 5e-05
+step: 36000, loss: 1.0899813175201416, lr: 5e-05
+step: 37000, loss: 1.0315561294555664, lr: 5e-05
+step: 38000, loss: 0.9620163440704346, lr: 5e-05
+step: 39000, loss: 0.9937262535095215, lr: 5e-05
+step: 40000, loss: 1.0750834941864014, lr: 5e-05
+step: 41000, loss: 1.0300334692001343, lr: 5e-05
+step: 42000, loss: 1.1314208507537842, lr: 5e-05
+step: 43000, loss: 1.0224138498306274, lr: 5e-05
+step: 44000, loss: 1.0174527168273926, lr: 5e-05
+step: 45000, loss: 0.9827642440795898, lr: 5e-05
+step: 46000, loss: 0.9445072412490845, lr: 5e-05
+step: 47000, loss: 1.0077296495437622, lr: 5e-05
+step: 48000, loss: 0.8855561017990112, lr: 5e-05
+step: 49000, loss: 1.0330817699432373, lr: 5e-05
+Mean loss over 300 points is 0.0019954721564359587
+-----------------------------------------------
+
+RUN NUMBER 8
+Numpy random seed 58
+HYPERPARAMETERS ARE: 
+m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func
+(1, 0.5, 5e-05, 50000, 500, 5, <function relu at 0x117c9eb70>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, <function sigmoid at 0x117de10d0>, 150, 30, 0.999, 100, <class 'tensorflow.python.training.adam.AdamOptimizer'>)
+-----------------------------------------------
+
+step: 0, loss: 23.58669662475586, lr: 5e-05
+step: 1000, loss: 20.834110260009766, lr: 5e-05
+step: 2000, loss: 23.309734344482422, lr: 5e-05
+step: 3000, loss: 17.669788360595703, lr: 5e-05
+step: 4000, loss: 19.947797775268555, lr: 5e-05
+step: 5000, loss: 18.82804298400879, lr: 5e-05
+step: 6000, loss: 19.392120361328125, lr: 5e-05
+step: 7000, loss: 19.522539138793945, lr: 5e-05
+step: 8000, loss: 17.826679229736328, lr: 5e-05
+step: 9000, loss: 17.490421295166016, lr: 5e-05
+step: 10000, loss: 17.643238067626953, lr: 5e-05
+step: 11000, loss: 18.7297306060791, lr: 5e-05
+step: 12000, loss: 19.47916603088379, lr: 5e-05
+step: 13000, loss: 17.099327087402344, lr: 5e-05
+step: 14000, loss: 19.495697021484375, lr: 5e-05
+step: 15000, loss: 17.981231689453125, lr: 5e-05
+step: 16000, loss: 20.381956100463867, lr: 5e-05
+step: 17000, loss: 20.624622344970703, lr: 5e-05
+step: 18000, loss: 17.25640296936035, lr: 5e-05
+step: 19000, loss: 17.651540756225586, lr: 5e-05
+step: 20000, loss: 15.815407752990723, lr: 5e-05
+step: 21000, loss: 18.501358032226562, lr: 5e-05
+step: 22000, loss: 17.71556282043457, lr: 5e-05
+step: 23000, loss: 17.968944549560547, lr: 5e-05
+step: 24000, loss: 19.017553329467773, lr: 5e-05
+step: 25000, loss: 19.826709747314453, lr: 5e-05
+step: 26000, loss: 16.140228271484375, lr: 5e-05
+step: 27000, loss: 19.097274780273438, lr: 5e-05
+step: 28000, loss: 18.875471115112305, lr: 5e-05
+step: 29000, loss: 17.849699020385742, lr: 5e-05
+step: 30000, loss: 19.077823638916016, lr: 5e-05
+step: 31000, loss: 16.733064651489258, lr: 5e-05
+step: 32000, loss: 19.73849868774414, lr: 5e-05
+step: 33000, loss: 18.519023895263672, lr: 5e-05
+step: 34000, loss: 18.138193130493164, lr: 5e-05
+step: 35000, loss: 17.486507415771484, lr: 5e-05
+step: 36000, loss: 15.794675827026367, lr: 5e-05
+step: 37000, loss: 18.57860565185547, lr: 5e-05
+step: 38000, loss: 19.340587615966797, lr: 5e-05
+step: 39000, loss: 17.451601028442383, lr: 5e-05
+step: 40000, loss: 17.121557235717773, lr: 5e-05
+step: 41000, loss: 17.19764518737793, lr: 5e-05
+step: 42000, loss: 15.064574241638184, lr: 5e-05
+step: 43000, loss: 21.097185134887695, lr: 5e-05
+step: 44000, loss: 17.031530380249023, lr: 5e-05
+step: 45000, loss: 17.122962951660156, lr: 5e-05
+step: 46000, loss: 16.154935836791992, lr: 5e-05
+step: 47000, loss: 19.95252227783203, lr: 5e-05
+step: 48000, loss: 18.923173904418945, lr: 5e-05
+step: 49000, loss: 19.4931697845459, lr: 5e-05
+Mean loss over 300 points is 0.03540616054237927
+-----------------------------------------------
+
