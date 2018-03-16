@@ -50,7 +50,7 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   # x1 = x0 #TODO apply piecewise linear function 
   
   u1 = x1 - x0 
-  u1_cost = (tf.norm(u1)**2) / batch_size
+  u1_cost = (tf.norm(u1)**2) / m #todo change this? not sure which is correct
 
   # The observed value for the second controller is the original controlled with noise
   y2 = tf.placeholder_with_default(x1 + z, [None, m])
@@ -63,9 +63,16 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   u2 = -l4
   x2 = x1 + u2
 
-  x2_cost = (tf.norm(x2) ** 2) / batch_size
-  wits_cost = (k_sq * u1_cost) + x2_cost
+  x2_cost = (tf.norm(x2) ** 2) / m
+  '''
+  Note: Because the net has no control over x0, x1, or u1, 
+  it doesn't matter whether k_sq * u1 is in the cost.
 
+  However, this does mean the loss numbers are no longer comparable here. 
+  Just means 
+  '''
+  #wits_cost = (k_sq * u1_cost) + x2_cost
+  wits_cost = x2_cost
   adaptive_learning_rate = tf.placeholder_with_default(learning_rate, [])
 
   if optimizer_func == tf.train.AdamOptimizer: 
@@ -102,8 +109,19 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
               print("step: {}, loss: {}, lr: {}".format(step, val, current_lr))
 
     # Test over a continuous range of X
-      num_x0_points = 700
-      x0_test = np.linspace(-3*x_stddev, 3*x_stddev, num=num_x0_points)
+    
+      num_x0_points = 550
+      x0_test = np.linspace(-3 * x_stddev, 3 * x_stddev, num=num_x0_points)
+      # x0_test = np.hstack((np.linspace(-3 * x_stddev, -7.1, num=100), 
+      #      np.linspace(-7.1, -6.9, num=50), 
+      #      np.linspace(-6.9, -0.1, num=100),
+      #      np.linspace(-0.1, 0.1, num=50), 
+      #      np.linspace(0.1, 6.9, num=100),
+      #      np.linspace(6.9, 7.1, num=50), 
+      #      np.linspace(7.1, 3*x_stddev, num=100)))
+      # np.linspace(-7.1, -6.9, num=100), np.linspace(-0.1, 0.1, num=100), np.linspace(6.9, 7.1, num=100)
+      # x0_test = np.linspace(-3*x_stddev, 3*x_stddev, num=num_x0_points)
+      y2_test = x0_test
       x1_test = pw_step_function(x0_test)
       z_test = np.random.normal(scale=1, size=num_x0_points)
 
@@ -119,7 +137,7 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
             u1tmp, u2tmp, wits_cost_tmp = sess.run(
                   [u1, u2, wits_cost],
                   feed_dict={x0: x0_test[i].reshape((1, 1)), x1: x1_test[i].reshape((1, 1)),
-                  z: z_test[i].reshape((1, 1))
+                  z: z_test[i].reshape((1, 1)), y2: y2_test[i].reshape((1, 1))
             })
             wits_cost_t += wits_cost_tmp
             u1t += u1tmp
@@ -145,17 +163,25 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
       #   str(num_units_1), str(num_units_2) ,str(k_sq), 
       #   str(encoder_activation_1), str(decoder_activation_1)))
 
+      # print('x0 points: {}'.format(x0_test))
+      # print('x1 points: {}'.format(x1_test))
+      # print('z points: {}'.format(z_test))
+      # print('y1 points: {}'.format(x1_test + z_test))
+      # print('u2 points: {}'.format(u2_test[0]))
       plt.clf()
-      plt.scatter(x1_test + z_test, u2_test[0], s=0.5)
-      plt.plot([-7, -7], [-10, -4], c='orange')
-      plt.plot([0, 0], [-4, 4], c='orange')
-      plt.plot([7, 7], [4, 10], c='orange')
+      plt.plot(y2_test, u2_test[0], lw=0.5, c='green')
+      plt.scatter(y2_test, u2_test[0], s=0.2, c='blue')
+      plt.plot([-4, -4], [-10, 10], c='red')
+      plt.plot([-1, -1], [-10, 10], c='red')
+      plt.plot([2, 2], [-10, 10], c='red')
+      plt.plot([5, 5], [-10, 10], c='red')
+      
       # plt.legend(handles=[l1])
-      plt.title("Y1 vs U2, {} Units, {} Activation".format(
-        str(num_units_2), str(decoder_activation_1)))
-      plt.savefig("figs/fixed_encoder_test/y1vsu2_nu1_{}_nu2_{}_ksq_{}_f1_{}_f3_{}.png".format(
-        str(num_units_1), str(num_units_2) ,str(k_sq), 
-        str(encoder_activation_1), str(decoder_activation_1)))
+      plt.title("Y2 vs U2, {} Units, {}, {} Activations".format(
+        str(num_units_2), str(decoder_activation_1), str(decoder_activation_2)))
+      plt.savefig("figs/fixed_encoder_test/y2vsu2_nu1_{}_nu2_{}_ksq_{}_xstd_{}_f3_{}_f4_{}.png".format(
+        str(num_units_1), str(num_units_2) ,str(k_sq), str(x_stddev),
+        str(decoder_activation_1), str(decoder_activation_2)))
 
       # plt.clf()
       # l1, = plt.plot(y1_test, u2_test[0] + x1_test[0], label="X2 Test")
@@ -170,8 +196,8 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
       # l2, = plt.plot(x0_test, x1_test, label="deterministic x1")
       # plt.title("Deterministic Step Function")
       # plt.legend(handles=[l2])
-      # plt.savefig("figs/fixed_encoder_test/x0vsx1_nu1_{}_nu2_{}_ksq_{}_f1_{}_f3_{}.png".format(
-      #   str(num_units_1), str(num_units_2) ,str(k_sq), 
+      # plt.savefig("figs/fixed_encoder_test/x0vsx1_nu1_{}_nu2_{}_ksq_{}_xstd_{}_f3_{}_f4_{}.png".format(
+      #   str(num_units_1), str(num_units_2) ,str(k_sq), str(x_stddev), 
       #   str(encoder_activation_1), str(decoder_activation_1)))
 
 def pw_step_function(x_arr): 
@@ -181,7 +207,7 @@ def pw_step_function(x_arr):
   returns: A numpy 1D array of shape (N, ) whose values are in [-10, -4, 4, 10]
   '''
   return np.piecewise(x_arr, [x_arr < -7, (x_arr >= -7) & (x_arr < 0), (x_arr >= 0) & (x_arr < 7), x_arr > 7],
-    [-10, -4, 4, 10])
+    [-4, -1, 2, 5])
 
 def cartesian_product(*arrays): 
   return itertools.product(*arrays)
@@ -192,13 +218,13 @@ if __name__ == "__main__":
   diemsions = [1]
   k_squared_vals = [0.04]
   learning_rates = [5e-5]
-  num_epochs = [30000]
+  num_epochs = [8000]
   batch_size = [100]
   x_stddeviations = [5]
   encoder_activation_1s = [tf.nn.relu]
   encoder_activation_2s = [tf.identity]
-  decoder_activation_1s = [tf.nn.relu, tf.nn.sigmoid]
-  decoder_activation_2s = [tf.identity]
+  decoder_activation_1s = [tf.identity, tf.nn.relu, tf.nn.sigmoid]
+  decoder_activation_2s = [tf.identity, tf.nn.relu, tf.nn.sigmoid]
   num_units_1s = [150]
   num_units_2s = [30]
   decay_rates = [1 - 1e-3]
