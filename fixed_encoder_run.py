@@ -11,9 +11,11 @@ import matplotlib.pyplot as plt
 
 def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
   encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
-  num_units_1, num_units_2, decay, test_averaging, optimizer_func):
+  num_units_1, num_units_2, decay, test_averaging, optimizer_func, skip_layer):
   '''
-  A single run of the neural network. Used for hyerparameter search.
+  A single run of the decoder network. Assume a fixed encoder which performs a piecewise
+  constant function. 
+
   m = Dimensions
   k_sq = k_squared value for loss function
   learning_rate = constant LR. 
@@ -29,6 +31,7 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   decay = learning rate decay 
   test_averaging = number of steps over which to average u1, u2, x1
   optimizer_func = optimizer from tensorflow
+  skip_layer = A boolean which indicates whether the last layer sees a residual or not. 
   '''
 
   #x1 is a placeholder because it is deterministic. We 
@@ -50,20 +53,27 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   # x1 = x0 #TODO apply piecewise linear function 
   
   u1 = x1 - x0 
-  u1_cost = (tf.norm(u1)**2) / m #todo change this? not sure which is correct
+  u1_cost = tf.reduce_mean(tf.pow(tf.norm(u1,axis=1),2))
+  # u1_cost = (tf.norm(u1)**2) / batch_size #todo change this? not sure which is correct
+
 
   # The observed value for the second controller is the original controlled with noise
   y2 = tf.placeholder_with_default(x1 + z, [None, m])
 
   l3 = tf.layers.dense(
     y2, num_units_2, activation=decoder_activation_1, use_bias=True)
-  l4 = tf.layers.dense(
-    l3, m, activation=decoder_activation_2, use_bias=True)
+  if skip_layer: 
+    l4 = tf.layers.dense(
+      l3 + y2, m, activation=decoder_activation_2, use_bias=True) #CHANGED TO RESIDUAL LAYER
+  else: 
+    l4 = tf.layers.dense(
+      l3, m, activation=decoder_activation_2, use_bias=True) #CHANGED TO RESIDUAL LAYER
 
   u2 = -l4
   x2 = x1 + u2
 
-  x2_cost = (tf.norm(x2) ** 2) / m
+  # x2_cost = (tf.norm(x2) ** 2) / batch_size
+  x2_cost = tf.reduce_mean(tf.pow(tf.norm(x2,axis=1),2))
   '''
   Note: Because the net has no control over x0, x1, or u1, 
   it doesn't matter whether k_sq * u1 is in the cost.
@@ -223,38 +233,38 @@ if __name__ == "__main__":
   x_stddeviations = [5]
   encoder_activation_1s = [tf.nn.relu]
   encoder_activation_2s = [tf.identity]
-  decoder_activation_1s = [tf.identity, tf.nn.relu, tf.nn.sigmoid]
-  decoder_activation_2s = [tf.identity, tf.nn.relu, tf.nn.sigmoid]
+  decoder_activation_1s = [tf.nn.tanh, tf.nn.sigmoid]
+  decoder_activation_2s = [tf.identity]
   num_units_1s = [150]
   num_units_2s = [30]
   decay_rates = [1 - 1e-3]
   test_average_sizes = [100]
   optimizers = [tf.train.AdamOptimizer]
-
+  skip_layers = [True, False]
   
   run_num = 1
 
   all_hyperparam_tuples = cartesian_product(diemsions, k_squared_vals,
     learning_rates, num_epochs, batch_size, x_stddeviations, encoder_activation_1s,
     encoder_activation_2s, decoder_activation_1s, decoder_activation_2s, num_units_1s, 
-    num_units_2s, decay_rates, test_average_sizes, optimizers)
+    num_units_2s, decay_rates, test_average_sizes, optimizers, skip_layers)
 
 
   for tup in all_hyperparam_tuples: 
     #Unroll the huge tuple of hyperparameters.
     #I apologize for the very long line of code. RIP pep8 - Akhil
-    m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func = tup
+    m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func, skip_layer = tup
     seed = run_num + 50
     np.random.seed(seed)
     print('RUN NUMBER {}'.format(run_num))
     print('Numpy random seed {}'.format(seed))
     print('HYPERPARAMETERS ARE: ')
     print('m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, '
-      + 'decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func')
+      + 'decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func, skip_layer')
     print(tup)
     print('-----------------------------------------------\n')
     neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
       encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
-      num_units_1, num_units_2, decay, test_averaging, optimizer_func)
+      num_units_1, num_units_2, decay, test_averaging, optimizer_func, skip_layer)
     print('-----------------------------------------------\n')
     run_num += 1
