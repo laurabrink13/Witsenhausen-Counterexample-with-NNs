@@ -228,6 +228,9 @@ def pw_step_function(x_arr):
 def cartesian_product(*arrays): 
   return itertools.product(*arrays)
 
+
+
+
 if __name__ == "__main__":
   #learning_rates = [0.01, 0.001, 0.0001, 0.005]
   

@@ -2,56 +2,38 @@ import numpy as np
 from numpy import linalg as LA
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import shelve 
+import itertools
 
-def stack_weights(encoder_vars, decoder_vars): 
-    '''
-    Unpacks two lists of weights (encoder_vars, decoder_vars)
-    and stacks them horizontally into a giant vector. 
+# def stack_weights(encoder_vars, decoder_vars): 
+#     '''
+#     Unpacks two lists of weights (encoder_vars, decoder_vars)
+#     and stacks them horizontally into a giant vector. 
 
-    Helper function for weight_norm_update. 
-    '''
-    for i in range(len(encoder_vars)): 
-        encoder_vars[i] = np.ndarray.flatten(encoder_vars[i])
-        decoder_vars[i] = np.ndarray.flatten(decoder_vars[i])
-    W1, b1, W2, b2 = encoder_vars[0], encoder_vars[1], encoder_vars[2], encoder_vars[3]
-    W3, b3, W4, b4 = decoder_vars[0], decoder_vars[1], decoder_vars[2], decoder_vars[3]
-    return np.hstack((W1, b1, W2, b2, W3, b3, W4, b4))
+#     Helper function for weight_norm_update. 
+#     '''
+#     for i in range(len(encoder_vars)): 
+#         encoder_vars[i] = np.ndarray.flatten(encoder_vars[i])
+#         decoder_vars[i] = np.ndarray.flatten(decoder_vars[i])
+#     W1, b1, W2, b2 = encoder_vars[0], encoder_vars[1], encoder_vars[2], encoder_vars[3]
+#     W3, b3, W4, b4 = decoder_vars[0], decoder_vars[1], decoder_vars[2], decoder_vars[3]
+#     return np.hstack((W1, b1, W2, b2, W3, b3, W4, b4))
 
 
-def weight_norm_update(weight_stack_1, weight_stack_2): 
-	'''
-	Computes the update l1, l2 norms for two vectors 
-	(weight_stack_1, weight_stack_2).
-	'''
-    weight_diff = weight_stack_1 - weight_stack_2
-    l2_norm = LA.norm(weight_diff) / LA.norm(weight_stack_1)
-    l1_norm = np.sum(np.abs(weight_diff)) / np.sum(np.abs(weight_stack_1))
-    return l1_norm, l2_norm
+# def weight_norm_update(weight_stack_1, weight_stack_2): 
+# 	'''
+# 	Computes the update l1, l2 norms for two vectors 
+# 	(weight_stack_1, weight_stack_2).
+# 	'''
+#     weight_diff = weight_stack_1 - weight_stack_2
+#     l2_norm = LA.norm(weight_diff) / LA.norm(weight_stack_1)
+#     l1_norm = np.sum(np.abs(weight_diff)) / np.sum(np.abs(weight_stack_1))
+#     return l1_norm, l2_norm
 
-# def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev, 
-#   encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, 
-#   num_units_1, num_units_2, decay, test_averaging, optimizer_func, skip_layer):
-  '''
-  A single run of the decoder network. Assume a fixed encoder which performs a piecewise
-  constant function. 
 
-  m = Dimensions
-  k_sq = k_squared value for loss function
-  learning_rate = constant LR. 
-  epochs = number of epochs 
-  batch_size = batch_size for NN training
-  
-  num_units_1 = number of units in hidden layer 1 
-  num_units_2 = number of units in hidden layer 3 
-  decay = learning rate decay 
-  test_averaging = number of steps over which to average u1, u2, x1
-  optimizer_func = optimizer from tensorflow
-  skip_layer = A boolean which indicates whether the last layer sees a residual or not. 
-  '''
-
-def create_computational_graph(k_squared = 0.04, encoder_init_weights, decoder_init_weights,
+def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 	learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
-	init_bias_function, num_units_list): 
+	init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev): 
 	'''
 	k_squared: k_squared value for cost function
 	encoder_init_weights: a list of initial weights for encoder. 
@@ -62,9 +44,18 @@ def create_computational_graph(k_squared = 0.04, encoder_init_weights, decoder_i
 	decoder_activations: a list of activation functions (variable length)
 	init_weights_function: Weight initialization function. 
 	init_bias_function: Bias initialization function
-	num_units_list: list of unit numbers, of the form [m, ..., m]
+	num_units_list: list of unit numbers, of the form [m, ..., m] where m is dimension.
+	m: Dimension of input/output 
+	train_batch_size: Number of samples in a training batch 
+	mc_batch_size: Number of samples in a Monte Carlo batch (for testing)
+	num_epochs: Number of epoch steps to take in training
+	x_stddev: The standard deviation of the x0 input 
 	'''
-	k_squared = 0.04
+	if not(k_squared): 
+		k_squared = 0.04
+	
+	g1 = tf.Graph()
+
 	x0 = tf.placeholder(tf.float32, [None, 1])
 	z = tf.placeholder(tf.float32, [None, 1])
 	
@@ -85,8 +76,8 @@ def create_computational_graph(k_squared = 0.04, encoder_init_weights, decoder_i
 			encoder_params.append(tf.Variable(initial_value=init_bias, name=b_name))
 		else: 
 			fan_in, fan_out = num_units_list[i], num_units_list[i + 1]
-			encoder_params.append(tf.Variable(initial_value=init_weights_function([fan_in, fan_out]), name=w_name))
-			encoder_params.append(tf.Variable(initial_value=init_bias_function([fan_out]), name=b_name))
+			encoder_params.append(tf.Variable(init_weights_function([fan_in, fan_out]), name=w_name))
+			encoder_params.append(tf.Variable(init_bias_function([fan_out]), name=b_name))
 
 	#declare decoder
 	decoder_params = []
@@ -101,8 +92,8 @@ def create_computational_graph(k_squared = 0.04, encoder_init_weights, decoder_i
 			decoder_params.append(tf.Variable(initial_value=init_bias, name=b_name))
 		else: 
 			fan_in, fan_out = num_units_list[total_index], num_units_list[total_index + 1]
-			decoder_params.append(tf.Variable(initial_value=init_weights_function([fan_in, fan_out]), name=w_name))
-			decoder_params.append(tf.Variable(initial_value=init_bias_function([fan_out]), name=b_name))
+			decoder_params.append(tf.Variable(init_weights_function([fan_in, fan_out]), name=w_name))
+			decoder_params.append(tf.Variable(init_bias_function([fan_out]), name=b_name))
 
 	#Encoder forward pass 
 	current_hidden = x0 
@@ -143,22 +134,10 @@ def create_computational_graph(k_squared = 0.04, encoder_init_weights, decoder_i
 	train_op2 = decoder_opt.apply_gradients(zip(grads2, decoder_params))
 	train_op = tf.group(train_op1, train_op2)
 
-def train_net(k_squared = 0.04, encoder_init_weights, train_batch_size, mc_batch_size, num_epochs, x_stddev):
-	create_computational_graph(k_squared, encoder_init_weights)
+	# Training here. 
 
-	all_u1 = []
-	all_x2 = []
-	all_u2 = []
-	all_y2 = []
-	l1_weight_updates = []
-	l2_weight_updates = []
-
-	train_cost = []
-	weights_dict = {}
-	prev_weights = np.zeros(shape=(1051,))
-
-	mc_x_batch = np.random.normal(size=(mc_batch_size, 1), scale = x_stddev)
-	mc_z_batch = np.random.normal(size=(mc_batch_size, 1), scale = 1.0)
+	mc_x_batch = np.random.normal(size=(mc_batch_size, m), scale = x_stddev)
+	mc_z_batch = np.random.normal(size=(mc_batch_size, m), scale = 1.0)
 	mc_losses = []
 
 	epoch_step = int(num_epochs/50)
@@ -167,28 +146,101 @@ def train_net(k_squared = 0.04, encoder_init_weights, train_batch_size, mc_batch
 	print('Training Batch Size: {}, MC Batch Size: {}'.format(train_batch_size, mc_batch_size))
 
 	with tf.Session() as sess: 
-	    sess.run(tf.global_variables_initializer())
-	    #training
-	    for epoch in range(num_epochs): 
-	        x_batch = np.random.normal(size=(train_batch_size, 1), scale = x_stddev)
-	        z_batch = np.random.normal(size=(train_batch_size, 1), scale = 1.0)
+		sess.run(tf.global_variables_initializer())
+		for epoch in range(num_epochs): 
+			x_batch = np.random.normal(size=(train_batch_size, m), scale = x_stddev)
+			z_batch = np.random.normal(size=(train_batch_size, m), scale = 1.0)
 
-	        _, train_cost = sess.run([train_op, wits_cost], feed_dict = {x0: x_batch, z: z_batch})
+			_, train_cost = sess.run([train_op, wits_cost], feed_dict = {x0: x_batch, z: z_batch})
 
-	        #Uncomment this when interested in weight norms. 
-	        # _, cost, encoder_vars_tmp, decoder_vars_tmp  = sess.run([train_op, wits_cost, encoder_vars, decoder_vars], 
-	        #                                                         feed_dict={x0: x_batch, z: z_batch})
-	        train_cost.append(cost)
-	        
-	        mc_cost = sess.run([wits_cost], feed_dict={x0: mc_x_batch, z: mc_z_batch})
-	        mc_losses.append(mc_cost[0])
-	        
-	        #Uncomment this when interested in weight norms. 
-	        # next_weights = stack_weights(encoder_vars_tmp, decoder_vars_tmp)
-	        # l1_update, l2_update = weight_norm_update(prev_weights, next_weights)
-	        # l1_weight_updates.append(l1_update)
-	        # l2_weight_updates.append(l2_update)
-	        # prev_weights = next_weights
+			#Uncomment this when interested in weight norms. 
+			# _, cost, encoder_vars_tmp, decoder_vars_tmp  = sess.run([train_op, wits_cost, encoder_vars, decoder_vars], 
+			#                                                         feed_dict={x0: x_batch, z: z_batch})
+			# train_cost.append(cost)
+			
+			mc_cost = sess.run([wits_cost], feed_dict={x0: mc_x_batch, z: mc_z_batch})
+			# mc_losses.append(mc_cost[0])
+			
+			#Uncomment this when interested in weight norms. 
+			# next_weights = stack_weights(encoder_vars_tmp, decoder_vars_tmp)
+			# l1_update, l2_update = weight_norm_update(prev_weights, next_weights)
+			# l1_weight_updates.append(l1_update)
+			# l2_weight_updates.append(l2_update)
+			# prev_weights = next_weights
 
-	        if epoch % epoch_step == 0: 
-	            print('Epoch {}, Cost {}, MC Cost: {}'.format(epoch, cost, mc_cost[0]))
+			if epoch % epoch_step == 0: 
+				print('Epoch {}, Cost {}, MC Cost: {}'.format(epoch, train_cost, mc_cost[0]))
+
+
+def cartesian_product(*arrays): 
+  return itertools.product(*arrays)
+
+
+# def get_init_encoder_weights(): 
+	# with shelve.open('intermediate_values') as db:
+#     db['encoder_stepfn_tanh_id_weights'] = encoder_init_data
+
+if __name__ == "__main__":
+	k_squared_vals = [0.04]
+	encoder_init_weights_lists = [[]]
+	decoder_init_weights_lists = [[]]
+	learning_rates_lists = [[1e-3, 1e-3], [5e-4, 5e-4]]
+	optimizers_lists = [[tf.train.GradientDescentOptimizer, tf.train.GradientDescentOptimizer]]
+	encoder_activations_lists = [[tf.nn.sigmoid, tf.identity]]
+	decoder_activations_lists = [[tf.nn.sigmoid, tf.nn.sigmoid, tf.nn.sigmoid, tf.identity]]
+	init_weights_functions = [tf.glorot_normal_initializer()]
+	init_bias_functions = [tf.zeros_initializer()]
+	num_units_lists = [[1, 10, 1, 10, 10, 10, 1]]
+	m_list = [1]
+	train_batch_sizes = [1000]
+	mc_batch_sizes = [1000]
+	num_epochs_list = [40000]
+	x_stddev_list = [5]
+	
+	# train_net(200, 500, 100, 5)
+
+	all_hyperparam_tuples = cartesian_product(k_squared_vals,
+		encoder_init_weights_lists,
+		decoder_init_weights_lists,
+		learning_rates_lists,
+		optimizers_lists,
+		encoder_activations_lists,
+		decoder_activations_lists,
+		init_weights_functions,
+		init_bias_functions,
+		num_units_lists,
+		m_list,
+		train_batch_sizes,
+		mc_batch_sizes,
+		num_epochs_list,
+		x_stddev_list)
+
+	run_num = 1
+	seed = 73
+
+	for tup in all_hyperparam_tuples: 
+		#Unroll the huge tuple of hyperparameters.
+		k_squared, encoder_init_weights, decoder_init_weights, learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev = tup
+
+		#Seed for reproducibility. Change seed every time. 
+		# seed = run_num + 28
+		np.random.seed(seed)
+		tf.set_random_seed(seed)
+
+		print('RUN NUMBER {}'.format(run_num))
+		print('Numpy/TF random seed {}'.format(seed))
+		print('HYPERPARAMETERS ARE: ')
+		print('k_squared, encoder_init_weights, decoder_init_weights,' +
+			'learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, ' + 
+			'init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev')
+		print(tup)
+		print('-----------------------------------------------\n')
+		nn_run(k_squared, encoder_init_weights, decoder_init_weights,
+			learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
+			init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
+		print('-----------------------------------------------\n')
+		run_num += 1
+
+  #   nn_run(k_squared, encoder_init_weights, decoder_init_weights,
+		# learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
+		# init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
