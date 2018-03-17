@@ -36,6 +36,7 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
 
   #x1 is a placeholder because it is deterministic. We 
   #also pass in x0 in order to calculate u1. 
+  
 
   x0 = tf.placeholder(tf.float32, [None, m])
   x1 = tf.placeholder(tf.float32, [None, m])
@@ -53,7 +54,9 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   # x1 = x0 #TODO apply piecewise linear function 
   
   u1 = x1 - x0 
-  u1_cost = tf.reduce_mean(tf.pow(tf.norm(u1,axis=1),2))
+  # u1_cost = tf.reduce_mean(tf.pow(tf.norm(u1,axis=1),2))
+
+  u1_cost = tf.reduce_mean(tf.reduce_sum((u1)**2, axis=1))
   # u1_cost = (tf.norm(u1)**2) / batch_size #todo change this? not sure which is correct
 
 
@@ -73,7 +76,9 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   x2 = x1 + u2
 
   # x2_cost = (tf.norm(x2) ** 2) / batch_size
-  x2_cost = tf.reduce_mean(tf.pow(tf.norm(x2,axis=1),2))
+  x2_cost = tf.reduce_mean(tf.reduce_sum((x2)**2, axis=1))
+
+  # x2_cost = tf.reduce_mean(tf.pow(tf.norm(x2,axis=1),2))
   '''
   Note: Because the net has no control over x0, x1, or u1, 
   it doesn't matter whether k_sq * u1 is in the cost.
@@ -142,13 +147,12 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
       for i in range(num_x0_points):
           u1t, u2t, wits_cost_t  = 0, 0, 0
           
-
+          #vignesh says: don't pass in y2 values
           for _ in range(test_averaging):
-            u1tmp, u2tmp, wits_cost_tmp = sess.run(
-                  [u1, u2, wits_cost],
-                  feed_dict={x0: x0_test[i].reshape((1, 1)), x1: x1_test[i].reshape((1, 1)),
-                  z: z_test[i].reshape((1, 1)), y2: y2_test[i].reshape((1, 1))
-            })
+            u1tmp, u2tmp, y2tmp,x1tmp, ztmp, wits_cost_tmp = sess.run(
+                 [u1, u2, y2, x1,z, wits_cost],
+                 feed_dict={x0: x0_test[i].reshape((1, 1)), x1: x1_test[i].reshape((1, 1)),
+                 z: np.array(np.random.normal(scale=1)).reshape((1, 1))})
             wits_cost_t += wits_cost_tmp
             u1t += u1tmp
             u2t += u2tmp
@@ -256,8 +260,10 @@ if __name__ == "__main__":
     m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func, skip_layer = tup
     seed = run_num + 50
     np.random.seed(seed)
+    tf.set_random_seed(seed)
+
     print('RUN NUMBER {}'.format(run_num))
-    print('Numpy random seed {}'.format(seed))
+    print('Numpy/TF random seed {}'.format(seed))
     print('HYPERPARAMETERS ARE: ')
     print('m, k_sq, learning_rate, epochs, batch_size, x_stddev, encoder_activation_1, encoder_activation_2, decoder_activation_1, '
       + 'decoder_activation_2, num_units_1, num_units_2, decay, test_averaging, optimizer_func, skip_layer')
