@@ -140,10 +140,21 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 	mc_z_batch = np.random.normal(size=(mc_batch_size, m), scale = 1.0)
 	mc_losses = []
 
-	epoch_step = int(num_epochs/50)
+	epoch_step = int(num_epochs/30)
 
 	print('Beginning Training....')
 	print('Training Batch Size: {}, MC Batch Size: {}'.format(train_batch_size, mc_batch_size))
+
+	# trying perturbed g.d. 
+	
+	prev_loss = 1e7 
+
+	#decalre testing stuff
+	num_x0_points = 600
+	test_averaging = 1000
+	x0_test = np.linspace(-3 * x_stddev, 3 * x_stddev, num=num_x0_points)
+	z_test = np.random.normal(scale=1, size=num_x0_points)
+	u1_test, u2_test, y2_test = np.zeros((1, num_x0_points)), np.zeros((1, num_x0_points)), np.zeros((1, num_x0_points))
 
 	with tf.Session() as sess: 
 		sess.run(tf.global_variables_initializer())
@@ -170,6 +181,50 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 
 			if epoch % epoch_step == 0: 
 				print('Epoch {}, Cost {}, MC Cost: {}'.format(epoch, train_cost, mc_cost[0]))
+				loss_update = np.abs(mc_cost[0] - prev_loss)
+				prev_loss = mc_cost[0]
+				if loss_update < 1e-4: 
+					print('Perturbing at epoch {}'.format(epoch))
+					for param in encoder_params + decoder_params: 
+						assign_perturbation = tf.assign(param, param + tf.random_uniform(param.shape, maxval=1e-1))
+						sess.run([assign_perturbation])#, feed_dict={encoder_params[0]: param})
+		print('Epoch {}, Cost {}, MC Cost: {}'.format(epoch, train_cost, mc_cost[0]))
+
+		
+
+		print('Beginning testing....')
+		for i in range(num_x0_points):
+			u1t, u2t, y2t  = 0, 0, 0
+
+			#vignesh says: don't pass in y2 values
+			for _ in range(test_averaging):
+				u1tmp, u2tmp, y2tmp, x1tmp = sess.run(
+					[u1, u2, x1_noise, x1],
+					feed_dict={x0: x0_test[i].reshape((1, 1)),
+					z: np.array(np.random.normal(scale=1)).reshape((1, 1))}) #generate z on the fly.
+				u1t += u1tmp
+				u2t += u2tmp
+				y2t += y2tmp
+
+			u1_test[0, i] = u1t / test_averaging
+			u2_test[0, i] = u2t / test_averaging
+			y2_test[0, i] = y2t / test_averaging
+      
+	print('producing plots')
+	plt.plot(x0_test, x0_test + u1_test[0], label="X1 Test")
+	plt.legend()
+	plt.title("X0 vs X1")
+	plt.savefig('figs/fixed_seed_test/x0_x1.png')
+	plt.show()
+
+
+	plt.clf()
+	plt.plot(y2_test[0], u2_test[0], lw=0.5, c='green')
+	plt.scatter(y2_test, u2_test[0], s=0.2, c='blue')
+	plt.title("Y2 vs U2")
+	plt.savefig('figs/fixed_seed_test/y2_u2.png')
+	plt.show()
+						
 
 
 def cartesian_product(*arrays): 
@@ -184,17 +239,17 @@ if __name__ == "__main__":
 	k_squared_vals = [0.04]
 	encoder_init_weights_lists = [[]]
 	decoder_init_weights_lists = [[]]
-	learning_rates_lists = [[1e-3, 1e-3], [5e-4, 5e-4]]
+	learning_rates_lists = [[5e-4, 5e-4], [1e-4, 1e-4]]
 	optimizers_lists = [[tf.train.GradientDescentOptimizer, tf.train.GradientDescentOptimizer]]
 	encoder_activations_lists = [[tf.nn.sigmoid, tf.identity]]
-	decoder_activations_lists = [[tf.nn.sigmoid, tf.nn.sigmoid, tf.nn.sigmoid, tf.identity]]
+	decoder_activations_lists = [[tf.nn.sigmoid, tf.identity]]
 	init_weights_functions = [tf.glorot_normal_initializer()]
 	init_bias_functions = [tf.zeros_initializer()]
-	num_units_lists = [[1, 10, 1, 10, 10, 10, 1]]
+	num_units_lists = [[1, 10, 1, 10, 1]]
 	m_list = [1]
 	train_batch_sizes = [1000]
 	mc_batch_sizes = [1000]
-	num_epochs_list = [40000]
+	num_epochs_list = [3000]
 	x_stddev_list = [5]
 	
 	# train_net(200, 500, 100, 5)
@@ -216,30 +271,42 @@ if __name__ == "__main__":
 		x_stddev_list)
 
 	run_num = 1
-	seed = 73
+	# seed = 85
 
+	good_seeds = []
+	good_losses = []
 	for tup in all_hyperparam_tuples: 
 		#Unroll the huge tuple of hyperparameters.
 		k_squared, encoder_init_weights, decoder_init_weights, learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev = tup
 
 		#Seed for reproducibility. Change seed every time. 
-		# seed = run_num + 28
-		np.random.seed(seed)
-		tf.set_random_seed(seed)
 
-		print('RUN NUMBER {}'.format(run_num))
-		print('Numpy/TF random seed {}'.format(seed))
-		print('HYPERPARAMETERS ARE: ')
-		print('k_squared, encoder_init_weights, decoder_init_weights,' +
-			'learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, ' + 
-			'init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev')
-		print(tup)
-		print('-----------------------------------------------\n')
-		nn_run(k_squared, encoder_init_weights, decoder_init_weights,
-			learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
-			init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
-		print('-----------------------------------------------\n')
-		run_num += 1
+		# do we need a seed for the random seed generator? whoa...
+
+		for seed in [22, 196]:
+			# seed = np.random.randint(low=5, high=200)
+			np.random.seed(seed)
+			tf.set_random_seed(seed)
+
+			print('RUN NUMBER {}'.format(run_num))
+			print('Numpy/TF random seed {}'.format(seed)) #prints the seed here. 
+			print('HYPERPARAMETERS ARE: ')
+			print('k_squared, encoder_init_weights, decoder_init_weights,' +
+				'learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, ' + 
+				'init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev')
+			print(tup)
+			print('-----------------------------------------------\n')
+			final_cost = nn_run(k_squared, encoder_init_weights, decoder_init_weights,
+				learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
+				init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
+			print('-----------------------------------------------\n')
+			run_num += 1
+
+			if final_cost < 0.9: 
+				good_seeds.append(seed)
+				good_losses.append(final_cost)
+		for seed, cost in zip(good_seeds, good_losses): 
+			print('Seed {} had loss {}'.format(seed, cost))
 
   #   nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 		# learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
