@@ -196,7 +196,6 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 
 		print('Beginning testing....')
 		for i in range(num_x0_points):
-			print('Testing on point {}'.format(i))
 			u1t, u2t, y2t  = 0, 0, 0
 
 			#vignesh says: don't pass in y2 values
@@ -213,27 +212,14 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 			u2_test[0, i] = u2t / test_averaging
 			y2_test[0, i] = y2t / test_averaging
       
- #      k_squared: k_squared value for cost function
-	# encoder_init_weights: a list of initial weights for encoder. 
-	# decoder_init_weights: a list of initial weights for decoder. 
-	# learning_rates: list of two learning rates (for encoder and decoder)
-	# optimizers: list of two optimizers (for encoder and decoder)
-	# encoder_activations: a list of activation functions (variable length)
-	# decoder_activations: a list of activation functions (variable length)
-	# init_weights_function: Weight initialization function. 
-	# init_bias_function: Bias initialization function
-	# num_units_list: list of unit numbers, of the form [m, ..., m] where m is dimension.
-	# m: Dimension of input/output 
-	# train_batch_size: Number of samples in a training batch 
-	# mc_batch_size: Number of samples in a Monte Carlo batch (for testing)
-	# num_epochs: Number of epoch steps to take in training
-	# x_stddev: The standard deviation of the x0 input 
 	print('producing plots')
+
+	plt.clf()
 	plt.plot(x0_test, x0_test + u1_test[0], label="X1 Test")
 	plt.legend()
 	plt.title("X0 vs X1")
-	plt.savefig('figs/fixed_seed_test/x0_x1_ksq_{}_xstd_{}_lr1_{}_lr2_{}.png'.format(k_squared, 
-		x_stddev, encoder_lr, decoder_lr))
+	plt.savefig('figs/fixed_seed_test/x0_x1_ksq_{}_xstd_{}_lr1_{}_lr2_{}_layers1_{}_layers2_{}.png'.format(k_squared, 
+		x_stddev, encoder_lr, decoder_lr, encoder_activations, decoder_activations))
 	# plt.show(block=True)
 
 
@@ -241,8 +227,8 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 	plt.plot(y2_test[0], u2_test[0], lw=0.5, c='green')
 	plt.scatter(y2_test, u2_test[0], s=0.2, c='blue')
 	plt.title("Y2 vs U2")
-	plt.savefig('figs/fixed_seed_test/y2_u2_ksq_{}_xstd_{}_lr1_{}_lr2_{}.png'.format(k_squared, 
-		x_stddev, encoder_lr, decoder_lr))
+	plt.savefig('figs/fixed_seed_test/y2_u2_ksq_{}_xstd_{}_lr1_{}_lr2_{}_layers1_{}_layers2_{}.png'.format(k_squared, 
+		x_stddev, encoder_lr, decoder_lr, encoder_activations, decoder_activations))
 	# plt.show(block=True)
 
 	return final_mc_cost
