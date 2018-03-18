@@ -79,15 +79,9 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
   x2_cost = tf.reduce_mean(tf.reduce_sum((x2)**2, axis=1))
 
   # x2_cost = tf.reduce_mean(tf.pow(tf.norm(x2,axis=1),2))
-  '''
-  Note: Because the net has no control over x0, x1, or u1, 
-  it doesn't matter whether k_sq * u1 is in the cost.
-
-  However, this does mean the loss numbers are no longer comparable here. 
-  Just means 
-  '''
-  #wits_cost = (k_sq * u1_cost) + x2_cost
-  wits_cost = x2_cost
+  
+  wits_cost = (k_sq * u1_cost) + x2_cost
+  
   adaptive_learning_rate = tf.placeholder_with_default(learning_rate, [])
 
   if optimizer_func == tf.train.AdamOptimizer: 
@@ -98,6 +92,12 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
 
   init_op = tf.global_variables_initializer()
   print_step = int(epochs/50)
+
+  #RUN TRAINING
+  mc_batch_size = 5000
+  mc_x_batch = np.random.normal(size=(mc_batch_size, 1), scale = x_stddev)
+  mc_z_batch = np.random.normal(size=(mc_batch_size, 1), scale = 1.0)
+  mc_losses = []
 
   with tf.Session() as sess:
       sess.run(init_op)
@@ -120,14 +120,16 @@ def neural_net_run(m, k_sq, learning_rate, epochs, batch_size, x_stddev,
                #y1: y1_batch
                }) 
 
+          mc_cost = sess.run([wits_cost], feed_dict={x0: mc_x_batch, z: mc_z_batch})
+
           if step % print_step == 0:
-              print("step: {}, loss: {}, lr: {}".format(step, val, current_lr))
+              print("step: {}, train loss: {}, MC loss: ".format(step, val, current_lr))
 
     # Test over a continuous range of X
     
       num_x0_points = 550
       x0_test = np.linspace(-3 * x_stddev, 3 * x_stddev, num=num_x0_points)
-      # x0_test = np.hstack((np.linspace(-3 * x_stddev, -7.1, num=100), 
+      # x0_test = num_x0_points.hstack((np.linspace(-3 * x_stddev, -7.1, num=100), 
       #      np.linspace(-7.1, -6.9, num=50), 
       #      np.linspace(-6.9, -0.1, num=100),
       #      np.linspace(-0.1, 0.1, num=50), 
@@ -225,6 +227,9 @@ def pw_step_function(x_arr):
 
 def cartesian_product(*arrays): 
   return itertools.product(*arrays)
+
+
+
 
 if __name__ == "__main__":
   #learning_rates = [0.01, 0.001, 0.0001, 0.005]
