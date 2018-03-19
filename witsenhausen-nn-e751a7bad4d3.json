@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "witsenhausen-nn-198500",
+  "private_key_id": "e751a7bad4d3a9c2aaba1e5186609d45fd38c919",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC13X065jpWeZSg\n6b8hJwzeIzhM/gApIdGrvIPKhmvhNt0LhcrgdLo7uomtvtFYVbaRWmMqWoqjotpK\nPF79QN6eFpYPyrKvN3t96TuDtwUf5dVfpGSJ5vYqwYYNkbQ6OCU6DU35avJvjCEc\nAmPCJFCxDDcyg6BQEhK0lc4Qrsyofc8z/W5JME/YKglUGT8OmhPsKplNxuyc7/DH\n5//0kXoCy0qZmAuzkS5eZCrwGjlpe6KmQSOH2HNLUsBW2VGV9Bjh0wWH4r1s+SAj\nTYCK+vnMLYf09EEm18FuLyLJNj6zV6XxF+TrL/3XykhoaeQxXJHHpNpNUsWXiI7x\nhvo51JzLAgMBAAECggEADP2859uxWCMIOHRqGEqrUyTt7SYJyeZmDWAChBGVHDno\nkV2lz+HWudSJ6DTkzGwXBgwQYGKmW6kS8dGdMXcUT/OqFYezuut6MVTbUP3ealhn\nJRVfrzAl7ojzc/2wA6amFh8ELmhy2AAJD3CmQqSIdRU7zipz5bRczLSUy0FJUlHH\ndb/PU4K0bmbu3iVC7fdg96ZDIHXSKDO9uoGtegqgaw/Dc5+i7i7a3BLdizCfIRz1\notsn/A2MSNLiF8xDF/kMnprdDv62VH8tyi5PvozAK6NrBjOyqTlVE55uQ5bIoM+W\nXadbVIgTCb5+Fa2VexWTjEBgmblLXanhETR8TL6q4QKBgQDoRSlDDI0OcvzmL+5i\nQ4GQJcQIspH2JfO9gqqkApwmp+EkQZOikJ8pBY2DGPIY439T70+dU49gdaLoKJP/\no/yWpLwXTXko5Jvh7SJaIE38fj9uHjd4HzhZhNvvjBKW0CvTdxyqqvEDmDf9T1ov\n1Pg/ebwC5bet6C1HrzcXUl+TIQKBgQDIcgbUMNoNI7NQvi0Lsv2rOjwWkXnieg2Q\n5vGDqR1NI2awueVD/TLDfB/QxJUs7HUP3cCsY5yxemJH3I3yC40CBm88Nt7bsQxS\nx7rjp+vc/h1ro3WtVkH2hzkDY8w7jfZ4C19FhZb1jjRUVH4u+qRuM8ZmJmbWczgF\nt2ncVFxeawKBgCXUbd3/w1GhJNOQ5vCWMhn6LK2F+APxNnudNpGz4x7gpOi0zYji\nqSmTP/MkMvoew3Q2O+9R1r5NKpVJVqGCYfdfKUtaUOt6IHFxn/Cx5kHDhi03Oq2T\n2CesXe3sEHMDwL+WXNLnOI3vUt8s93Fm7G/aMeb+5yWp9QYB4aUow2xBAoGAB5Nv\nuKNkCm0YAOw/LZsFRWx9CulSrwGn85sW87/3kIvO/Mz54lj2izbsyOo1LS5+uivK\ndXmKWZbjkg2++6/+E16E48S7JZiKe7J62NHm80JTgFb8QqHo+lVgDUW/WVzjPORJ\nJIqJCxzl024iGsp0XonsbL300xQlwOmOwboah6MCgYEAnAevHFC6LYvSog1Vd36G\nPX5F/ACg3/JeprD74InM98XeU0RG8ZqfomaHmsPCUD+gv8ILwCDUKtuS/1uF1BBE\neQp+jqAl0XkeDaZ4K3zj17VjT+3Km7K88SuTtcfTgVahXQxDr+u3xHMXgk2h0rkP\nBQtqeTFr0ifN27yS/3w6Zis=\n-----END PRIVATE KEY-----\n",
+  "client_email": "starting-account-cv4giav9cn9@witsenhausen-nn-198500.iam.gserviceaccount.com",
+  "client_id": "104921529700780482271",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/starting-account-cv4giav9cn9%40witsenhausen-nn-198500.iam.gserviceaccount.com"
+}

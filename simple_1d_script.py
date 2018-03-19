@@ -1,34 +1,8 @@
 import numpy as np
 from numpy import linalg as LA
 import tensorflow as tf
-import matplotlib.pyplot as plt
-import shelve 
+# import matplotlib.pyplot as plt
 import itertools
-
-# def stack_weights(encoder_vars, decoder_vars): 
-#     '''
-#     Unpacks two lists of weights (encoder_vars, decoder_vars)
-#     and stacks them horizontally into a giant vector. 
-
-#     Helper function for weight_norm_update. 
-#     '''
-#     for i in range(len(encoder_vars)): 
-#         encoder_vars[i] = np.ndarray.flatten(encoder_vars[i])
-#         decoder_vars[i] = np.ndarray.flatten(decoder_vars[i])
-#     W1, b1, W2, b2 = encoder_vars[0], encoder_vars[1], encoder_vars[2], encoder_vars[3]
-#     W3, b3, W4, b4 = decoder_vars[0], decoder_vars[1], decoder_vars[2], decoder_vars[3]
-#     return np.hstack((W1, b1, W2, b2, W3, b3, W4, b4))
-
-
-# def weight_norm_update(weight_stack_1, weight_stack_2): 
-# 	'''
-# 	Computes the update l1, l2 norms for two vectors 
-# 	(weight_stack_1, weight_stack_2).
-# 	'''
-#     weight_diff = weight_stack_1 - weight_stack_2
-#     l2_norm = LA.norm(weight_diff) / LA.norm(weight_stack_1)
-#     l1_norm = np.sum(np.abs(weight_diff)) / np.sum(np.abs(weight_stack_1))
-#     return l1_norm, l2_norm
 
 
 def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
@@ -145,10 +119,6 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 	print('Beginning Training....')
 	print('Training Batch Size: {}, MC Batch Size: {}'.format(train_batch_size, mc_batch_size))
 
-	# trying perturbed g.d. 
-	
-	prev_loss = 1e7 
-
 	#declare testing stuf
 	num_x0_points = 100
 	test_averaging = 50
@@ -164,72 +134,32 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 
 			_, train_cost = sess.run([train_op, wits_cost], feed_dict = {x0: x_batch, z: z_batch})
 
-			#Uncomment this when interested in weight norms. 
-			# _, cost, encoder_vars_tmp, decoder_vars_tmp  = sess.run([train_op, wits_cost, encoder_vars, decoder_vars], 
-			#                                                         feed_dict={x0: x_batch, z: z_batch})
-			# train_cost.append(cost)
-			
-			
-			# mc_losses.append(mc_cost[0])
-			
-			#Uncomment this when interested in weight norms. 
-			# next_weights = stack_weights(encoder_vars_tmp, decoder_vars_tmp)
-			# l1_update, l2_update = weight_norm_update(prev_weights, next_weights)
-			# l1_weight_updates.append(l1_update)
-			# l2_weight_updates.append(l2_update)
-			# prev_weights = next_weights
-
+		
 			if epoch % epoch_step == 0: 
 				mc_cost = sess.run([wits_cost], feed_dict={x0: mc_x_batch, z: mc_z_batch})
 				print('Epoch {}, Cost {}, MC Cost: {}'.format(epoch, train_cost, mc_cost[0]))
-				# loss_update = np.abs(mc_cost[0] - prev_loss)
-				# prev_loss = mc_cost[0]
-				# if loss_update < 1e-4: 
-				# 	print('Perturbing at epoch {}'.format(epoch))
-				# 	for param in encoder_params + decoder_params: 
-				# 		assign_perturbation = tf.assign(param, param + tf.random_uniform(param.shape, maxval=1e-1))
-				# 		sess.run([assign_perturbation])#, feed_dict={encoder_params[0]: param})
 		final_mc_cost = mc_cost[0]
 		print('Epoch {}, Cost {}, MC Cost: {}'.format(epoch, train_cost, final_mc_cost))
 
 		
 
-		print('Beginning testing....')
-		for i in range(num_x0_points):
-			u1t, u2t, y2t  = 0, 0, 0
+		# print('Beginning testing....')
+		# for i in range(num_x0_points):
+		# 	u1t, u2t, y2t  = 0, 0, 0
 
-			#vignesh says: don't pass in y2 values
-			for _ in range(test_averaging):
-				u1tmp, u2tmp, y2tmp, x1tmp = sess.run(
-					[u1, u2, x1_noise, x1],
-					feed_dict={x0: x0_test[i].reshape((1, 1)),
-					z: np.array(np.random.normal(scale=1)).reshape((1, 1))}) #generate z on the fly.
-				u1t += u1tmp
-				u2t += u2tmp
-				y2t += y2tmp
+		# 	#vignesh says: don't pass in y2 values
+		# 	for _ in range(test_averaging):
+		# 		u1tmp, u2tmp, y2tmp, x1tmp = sess.run(
+		# 			[u1, u2, x1_noise, x1],
+		# 			feed_dict={x0: x0_test[i].reshape((1, 1)),
+		# 			z: np.array(np.random.normal(scale=1)).reshape((1, 1))}) #generate z on the fly.
+		# 		u1t += u1tmp
+		# 		u2t += u2tmp
+		# 		y2t += y2tmp
 
-			u1_test[0, i] = u1t / test_averaging
-			u2_test[0, i] = u2t / test_averaging
-			y2_test[0, i] = y2t / test_averaging
-      
-	print('producing plots')
-
-	plt.clf()
-	plt.plot(x0_test, x0_test + u1_test[0], label="X1 Test")
-	plt.legend()
-	plt.title("X0 vs X1")
-	plt.savefig('figs/fixed_seed_test/x0_x1_ksq_{}_xstd_{}_lr1_{}_lr2_{}_layers1_{}_layers2_{}.png'.format(k_squared, 
-		x_stddev, encoder_lr, decoder_lr, encoder_activations, decoder_activations))
-	# plt.show(block=True)
-
-
-	plt.clf()
-	plt.plot(y2_test[0], u2_test[0], lw=0.5, c='green')
-	plt.scatter(y2_test, u2_test[0], s=0.2, c='blue')
-	plt.title("Y2 vs U2")
-	plt.savefig('figs/fixed_seed_test/y2_u2_ksq_{}_xstd_{}_lr1_{}_lr2_{}_layers1_{}_layers2_{}.png'.format(k_squared, 
-		x_stddev, encoder_lr, decoder_lr, encoder_activations, decoder_activations))
-	# plt.show(block=True)
+		# 	u1_test[0, i] = u1t / test_averaging
+		# 	u2_test[0, i] = u2t / test_averaging
+		# 	y2_test[0, i] = y2t / test_averaging
 
 	return final_mc_cost
 					
@@ -238,10 +168,6 @@ def nn_run(k_squared, encoder_init_weights, decoder_init_weights,
 def cartesian_product(*arrays): 
   return itertools.product(*arrays)
 
-
-# def get_init_encoder_weights(): 
-	# with shelve.open('intermediate_values') as db:
-#     db['encoder_stepfn_tanh_id_weights'] = encoder_init_data
 
 if __name__ == "__main__":
 	k_squared_vals = [0.04]
@@ -306,5 +232,3 @@ if __name__ == "__main__":
 			init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
 		print('-----------------------------------------------\n')
 		run_num += 1
-
-  
