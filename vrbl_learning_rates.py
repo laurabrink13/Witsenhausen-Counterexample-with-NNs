@@ -288,34 +288,23 @@ if __name__ == "__main__":
 		k_squared, encoder_init_weights, decoder_init_weights, learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev = tup
 
 		#Seed for reproducibility. Change seed every time. 
-
 		# do we need a seed for the random seed generator? whoa...
+		seed = np.random.randint(low=5, high=200)
+		np.random.seed(seed)
+		tf.set_random_seed(seed)
 
-		for seed in [22, 196]:
-			# seed = np.random.randint(low=5, high=200)
-			np.random.seed(seed)
-			tf.set_random_seed(seed)
+		print('RUN NUMBER {}'.format(run_num))
+		print('Numpy/TF random seed {}'.format(seed)) #prints the seed here. 
+		print('HYPERPARAMETERS ARE: ')
+		print('k_squared, encoder_init_weights, decoder_init_weights,' +
+			'learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, ' + 
+			'init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev')
+		print(tup)
+		print('-----------------------------------------------\n')
+		final_cost = nn_run(k_squared, encoder_init_weights, decoder_init_weights,
+			learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
+			init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
+		print('-----------------------------------------------\n')
+		run_num += 1
 
-			print('RUN NUMBER {}'.format(run_num))
-			print('Numpy/TF random seed {}'.format(seed)) #prints the seed here. 
-			print('HYPERPARAMETERS ARE: ')
-			print('k_squared, encoder_init_weights, decoder_init_weights,' +
-				'learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, ' + 
-				'init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev')
-			print(tup)
-			print('-----------------------------------------------\n')
-			final_cost = nn_run(k_squared, encoder_init_weights, decoder_init_weights,
-				learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
-				init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
-			print('-----------------------------------------------\n')
-			run_num += 1
-
-			if final_cost < 0.9: 
-				good_seeds.append(seed)
-				good_losses.append(final_cost)
-		for seed, cost in zip(good_seeds, good_losses): 
-			print('Seed {} had loss {}'.format(seed, cost))
-
-  #   nn_run(k_squared, encoder_init_weights, decoder_init_weights,
-		# learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
-		# init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev)
+  

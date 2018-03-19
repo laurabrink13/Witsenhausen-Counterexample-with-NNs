@@ -1,0 +1,136 @@
+RUN NUMBER 1
+Numpy/TF random seed 146
+HYPERPARAMETERS ARE: 
+k_squared, encoder_init_weights, decoder_init_weights,learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev
+(0.04, [], [], [0.0005, 0.0005], [<class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>, <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>], [<function sigmoid at 0x119e48510>, <function identity at 0x1198332f0>], [<function sigmoid at 0x119e48510>, <function identity at 0x1198332f0>], <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10e7ebba8>, <tensorflow.python.ops.init_ops.Zeros object at 0x181f88a748>, [1, 10, 1, 10, 1], 1, 1000, 1000, 2000, 5)
+-----------------------------------------------
+
+Beginning Training....
+Training Batch Size: 1000, MC Batch Size: 1000
+Epoch 0, Cost 24.031972885131836, MC Cost: 18.347518920898438
+Epoch 100, Cost 0.9321023225784302, MC Cost: 0.9732359051704407
+Epoch 200, Cost 0.8891720175743103, MC Cost: 0.972623884677887
+Epoch 300, Cost 0.8872585892677307, MC Cost: 0.972644567489624
+Epoch 400, Cost 0.9398680329322815, MC Cost: 0.9725944995880127
+Epoch 500, Cost 0.9839659929275513, MC Cost: 0.9736813306808472
+Epoch 600, Cost 0.9923258423805237, MC Cost: 0.9723946452140808
+Epoch 700, Cost 0.9079030752182007, MC Cost: 0.9725034832954407
+Epoch 800, Cost 0.983386754989624, MC Cost: 0.9722654223442078
+Epoch 900, Cost 0.9371747970581055, MC Cost: 0.9728260040283203
+Epoch 1000, Cost 0.9135221242904663, MC Cost: 0.9729005098342896
+Epoch 1100, Cost 0.964294970035553, MC Cost: 0.9729218482971191
+Epoch 1200, Cost 0.9810972809791565, MC Cost: 0.972312331199646
+Epoch 1300, Cost 1.0291138887405396, MC Cost: 0.9731073975563049
+Epoch 1400, Cost 0.9320269227027893, MC Cost: 0.9725152850151062
+Epoch 1500, Cost 0.9746804237365723, MC Cost: 0.9728808403015137
+Epoch 1600, Cost 0.9512024521827698, MC Cost: 0.972878098487854
+Epoch 1700, Cost 0.8941836357116699, MC Cost: 0.9725870490074158
+Epoch 1800, Cost 0.9066586494445801, MC Cost: 0.9727432131767273
+Epoch 1900, Cost 1.0006117820739746, MC Cost: 0.9730372428894043
+Epoch 1999, Cost 0.921942949295044, MC Cost: 0.9730372428894043
+Beginning testing....
+producing plots
+-----------------------------------------------
+
+RUN NUMBER 2
+Numpy/TF random seed 135
+HYPERPARAMETERS ARE: 
+k_squared, encoder_init_weights, decoder_init_weights,learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev
+(0.04, [], [], [0.0005, 0.0005], [<class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>, <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>], [<function tanh at 0x119e48620>, <function identity at 0x1198332f0>], [<function sigmoid at 0x119e48510>, <function identity at 0x1198332f0>], <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10e7ebba8>, <tensorflow.python.ops.init_ops.Zeros object at 0x181f88a748>, [1, 10, 1, 10, 1], 1, 1000, 1000, 2000, 5)
+-----------------------------------------------
+
+Beginning Training....
+Training Batch Size: 1000, MC Batch Size: 1000
+Epoch 0, Cost 63.45936965942383, MC Cost: 52.300437927246094
+Epoch 100, Cost 0.9547244310379028, MC Cost: 0.9060977697372437
+Epoch 200, Cost 0.9866240620613098, MC Cost: 0.9049389362335205
+Epoch 300, Cost 0.9518577456474304, MC Cost: 0.905418336391449
+Epoch 400, Cost 0.9334768056869507, MC Cost: 0.9041875004768372
+Epoch 500, Cost 0.9956389665603638, MC Cost: 0.9033474922180176
+Epoch 600, Cost 1.0037307739257812, MC Cost: 0.9035614728927612
+Epoch 700, Cost 0.9987823367118835, MC Cost: 0.9030345678329468
+Epoch 800, Cost 0.9453431963920593, MC Cost: 0.9022123217582703
+Epoch 900, Cost 1.039788007736206, MC Cost: 0.9028517603874207
+Epoch 1000, Cost 0.9691712260246277, MC Cost: 0.9018530249595642
+Epoch 1100, Cost 1.0129437446594238, MC Cost: 0.9015499353408813
+Epoch 1200, Cost 0.929397702217102, MC Cost: 0.9009307026863098
+Epoch 1300, Cost 0.9397203326225281, MC Cost: 0.9007986783981323
+Epoch 1400, Cost 0.88627028465271, MC Cost: 0.9013888835906982
+Epoch 1500, Cost 0.9065479636192322, MC Cost: 0.9006051421165466
+Epoch 1600, Cost 1.002524971961975, MC Cost: 0.9007142782211304
+Epoch 1700, Cost 0.9677780270576477, MC Cost: 0.9011733531951904
+Epoch 1800, Cost 0.9880796074867249, MC Cost: 0.9006310701370239
+Epoch 1900, Cost 0.8946146965026855, MC Cost: 0.8998605012893677
+Epoch 1999, Cost 0.9871587753295898, MC Cost: 0.8998605012893677
+Beginning testing....
+producing plots
+-----------------------------------------------
+
+RUN NUMBER 3
+Numpy/TF random seed 142
+HYPERPARAMETERS ARE: 
+k_squared, encoder_init_weights, decoder_init_weights,learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev
+(0.04, [], [], [0.0005, 0], [<class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>, <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>], [<function sigmoid at 0x119e48510>, <function identity at 0x1198332f0>], [<function sigmoid at 0x119e48510>, <function identity at 0x1198332f0>], <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10e7ebba8>, <tensorflow.python.ops.init_ops.Zeros object at 0x181f88a748>, [1, 10, 1, 10, 1], 1, 1000, 1000, 2000, 5)
+-----------------------------------------------
+
+Beginning Training....
+Training Batch Size: 1000, MC Batch Size: 1000
+Epoch 0, Cost 104.24243927001953, MC Cost: 108.35930633544922
+Epoch 100, Cost 44.7344856262207, MC Cost: 47.24089431762695
+Epoch 200, Cost 26.01068687438965, MC Cost: 26.449617385864258
+Epoch 300, Cost 20.478397369384766, MC Cost: 18.649702072143555
+Epoch 400, Cost 16.48110580444336, MC Cost: 15.441986083984375
+Epoch 500, Cost 15.978586196899414, MC Cost: 13.555542945861816
+Epoch 600, Cost 12.63766860961914, MC Cost: 12.07690715789795
+Epoch 700, Cost 11.105396270751953, MC Cost: 10.847705841064453
+Epoch 800, Cost 9.193353652954102, MC Cost: 9.825973510742188
+Epoch 900, Cost 9.957136154174805, MC Cost: 8.982501029968262
+Epoch 1000, Cost 7.216132164001465, MC Cost: 8.264829635620117
+Epoch 1100, Cost 8.008345603942871, MC Cost: 7.666713714599609
+Epoch 1200, Cost 6.176644325256348, MC Cost: 7.19039249420166
+Epoch 1300, Cost 7.814882278442383, MC Cost: 6.784436225891113
+Epoch 1400, Cost 5.604663372039795, MC Cost: 6.4466872215271
+Epoch 1500, Cost 6.607265949249268, MC Cost: 6.153682231903076
+Epoch 1600, Cost 5.75262975692749, MC Cost: 5.900422096252441
+Epoch 1700, Cost 5.477716445922852, MC Cost: 5.679015636444092
+Epoch 1800, Cost 6.091998100280762, MC Cost: 5.478938102722168
+Epoch 1900, Cost 4.987796306610107, MC Cost: 5.3042755126953125
+Epoch 1999, Cost 6.157704830169678, MC Cost: 5.3042755126953125
+Beginning testing....
+producing plots
+-----------------------------------------------
+
+RUN NUMBER 4
+Numpy/TF random seed 137
+HYPERPARAMETERS ARE: 
+k_squared, encoder_init_weights, decoder_init_weights,learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, init_bias_function, num_units_list, m, train_batch_size, mc_batch_size, num_epochs, x_stddev
+(0.04, [], [], [0.0005, 0], [<class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>, <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>], [<function tanh at 0x119e48620>, <function identity at 0x1198332f0>], [<function sigmoid at 0x119e48510>, <function identity at 0x1198332f0>], <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10e7ebba8>, <tensorflow.python.ops.init_ops.Zeros object at 0x181f88a748>, [1, 10, 1, 10, 1], 1, 1000, 1000, 2000, 5)
+-----------------------------------------------
+
+Beginning Training....
+Training Batch Size: 1000, MC Batch Size: 1000
+Epoch 0, Cost 32.2430305480957, MC Cost: 28.73175621032715
+Epoch 100, Cost 7.706961631774902, MC Cost: 8.94426441192627
+Epoch 200, Cost 4.97648811340332, MC Cost: 5.467710018157959
+Epoch 300, Cost 4.297611713409424, MC Cost: 4.30750036239624
+Epoch 400, Cost 3.930133581161499, MC Cost: 3.7887392044067383
+Epoch 500, Cost 3.4374237060546875, MC Cost: 3.428968906402588
+Epoch 600, Cost 3.0273196697235107, MC Cost: 3.143101692199707
+Epoch 700, Cost 2.6804535388946533, MC Cost: 2.913759708404541
+Epoch 800, Cost 2.9407613277435303, MC Cost: 2.7285642623901367
+Epoch 900, Cost 2.8371315002441406, MC Cost: 2.573637008666992
+Epoch 1000, Cost 2.178464889526367, MC Cost: 2.4411628246307373
+Epoch 1100, Cost 2.1126139163970947, MC Cost: 2.3260369300842285
+Epoch 1200, Cost 2.1950228214263916, MC Cost: 2.224853754043579
+Epoch 1300, Cost 1.890751600265503, MC Cost: 2.1379153728485107
+Epoch 1400, Cost 1.8799717426300049, MC Cost: 2.065629005432129
+Epoch 1500, Cost 1.8002806901931763, MC Cost: 2.0040361881256104
+Epoch 1600, Cost 1.8480210304260254, MC Cost: 1.9522457122802734
+Epoch 1700, Cost 1.6342929601669312, MC Cost: 1.9063267707824707
+Epoch 1800, Cost 1.9167394638061523, MC Cost: 1.8654751777648926
+Epoch 1900, Cost 1.6451637744903564, MC Cost: 1.8287936449050903
+Epoch 1999, Cost 1.6707357168197632, MC Cost: 1.8287936449050903
+Beginning testing....
+producing plots
+-----------------------------------------------
+
