@@ -1,0 +1,5 @@
+16a738
+1000 2d/results/dat/basic_16a738_1000.dat 2d/checkpoints/basic_16a738/model_1000.ckpt 0.9599942362024014 ls1_hu_128,tanh,nu_1,ls2_hu_2,identity,nu_1,ls3_hu_32,tanh,nu_2,ls4_hu_2,identity,nu_1,k_0.04,lr_0.001,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,0
+1001 2d/results/dat/basic_16a738_1001.dat 2d/checkpoints/basic_16a738/model_1001.ckpt 0.9599848443051091 ls1_hu_128,tanh,nu_1,ls2_hu_2,identity,nu_1,ls3_hu_32,tanh,nu_2,ls4_hu_2,identity,nu_1,k_0.04,lr_0.001,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,1
+1002 2d/results/dat/basic_16a738_1002.dat 2d/checkpoints/basic_16a738/model_1002.ckpt 0.960009847199373 ls1_hu_128,tanh,nu_1,ls2_hu_2,identity,nu_1,ls3_hu_32,tanh,nu_2,ls4_hu_2,identity,nu_1,k_0.04,lr_0.001,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,2
+1003 2d/results/dat/basic_16a738_1003.dat 2d/checkpoints/basic_16a738/model_1003.ckpt 0.9599787417132587 ls1_hu_128,tanh,nu_1,ls2_hu_2,identity,nu_1,ls3_hu_32,tanh,nu_2,ls4_hu_2,identity,nu_1,k_0.04,lr_0.001,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,3
