@@ -1,0 +1,3 @@
+d193cc
+1500 2d/results/dat/basic_d193cc_1500.dat 2d/checkpoints/basic_d193cc/model_1500.ckpt 0.3574778047863517 ls1_hu_128,sigmoid,nu_1,ls2_hu_2,identity,nu_1,ls3_hu_32,sigmoid,nu_1,ls4_hu_2,identity,nu_1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,0
+1501 2d/results/dat/basic_d193cc_1501.dat 2d/checkpoints/basic_d193cc/model_1501.ckpt 0.9625420415796971 ls1_hu_128,sigmoid,nu_1,ls2_hu_2,identity,nu_1,ls3_hu_32,sigmoid,nu_1,ls4_hu_2,identity,nu_1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,1
