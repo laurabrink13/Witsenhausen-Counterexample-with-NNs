@@ -1,0 +1,5 @@
+ls1_128,sigmoid,2,ls2_1,identity,1,ls3_32,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,seed:70 0.24194343209266664 0.2736737084805184
+ls1_128,sigmoid,2,ls2_1,identity,1,ls3_32,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,seed:55 0.34318801045417785 0.33689867177695654
+ls1_128,sigmoid,2,ls2_1,identity,1,ls3_32,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,seed:29 0.35683133482933044 0.3515181177355416
+ls1_128,sigmoid,2,ls2_1,identity,1,ls3_32,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,seed:75 0.35640174984931944 0.35221639138850513
+ls1_128,sigmoid,2,ls2_1,identity,1,ls3_32,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,seed:23 0.3585046648979187 0.3528274187399525

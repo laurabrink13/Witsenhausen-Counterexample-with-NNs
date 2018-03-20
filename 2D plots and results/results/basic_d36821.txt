@@ -1,0 +1,3 @@
+ls1_150,sigmoid,5,ls2_1,identity,1,ls3_30,sigmoid,5,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_1000,stdx0_5.0,stdz_1.0,Adam,0 48.01543411254883 4.65367235539
+ls1_150,sigmoid,5,ls2_1,identity,1,ls3_30,sigmoid,5,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_1000,stdx0_5.0,stdz_1.0,Adam,1 239.59634719848634 16.1450253653
+ls1_150,sigmoid,5,ls2_1,identity,1,ls3_30,sigmoid,5,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_1000,stdx0_5.0,stdz_1.0,Adam,2 47.75265033721924 5.00883069299

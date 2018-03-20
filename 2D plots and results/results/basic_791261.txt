@@ -1,0 +1,2 @@
+ls1_128,sigmoid,2,ls2_1,identity,1,ls3_32,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.05,1-1e-9,me_15000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,seed:70 0.9624230808019638 0.9610650268251625
+ls1_128,sigmoid,2,ls2_1,identity,1,ls3_32,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.05,1-1e-6,me_15000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,seed:70 0.9611447113752365 0.9597006653325432

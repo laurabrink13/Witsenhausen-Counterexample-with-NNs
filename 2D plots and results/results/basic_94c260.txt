@@ -1,0 +1,17 @@
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,0 0.41628434032201767 0.415850538778
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,1 0.3691300541162491 0.361535895839
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,2 0.3691784089803696 0.364434515586
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,3 0.9620357358455658 0.960650636611
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,4 0.364701010286808 0.359594067571
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,5 0.42344694703817365 0.418232080361
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,6 0.35554215639829634 0.352600840074
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,7 0.35914131671190264 0.355975336112
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,8 0.6549084341526031 0.652826472971
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,9 0.44394786983728407 0.441743364865
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,10 0.5562442690134048 0.548958593565
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,11 0.9691572463512421 0.967316587465
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,12 0.3752518105506897 0.370553318673
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,13 0.9607734721899033 0.96084489204
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,14 0.3571153485774994 0.354284774664
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,15 0.3738552695512772 0.368320561378
+ls1_150,sigmoid,2,ls2_1,identity,1,ls3_30,sigmoid,2,ls4_1,identity,1,k_0.04,lr_0.1,1-1e-9,me_10000,bsz_10000,stdx0_5.0,stdz_1.0,Adam,16 0.4031220692396164 0.398365146763
