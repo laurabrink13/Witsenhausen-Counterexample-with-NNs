@@ -35,7 +35,7 @@ from os import getcwd
 def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_weights, decoder_init_weights, 
 	learning_rates, optimizers, encoder_activations, decoder_activations, init_weights_function, 
 	init_bias_function, num_units_list, train_batch_size, mc_batch_size, num_epochs, test_averaging,
-	num_test_points, test_point_stddevs, random_seed, 
+	num_test_points, test_point_stddevs=3, random_seed=20, generate_plots=False,
 	use_importance_sampling=False, use_perturbed_gd=False, storage_path=getcwd()):
 	'''
 	This is an all-purpose function for hyperparameter search. The reason there are so many parameters 
@@ -43,7 +43,10 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 
 	In addition to training and testing a neural network with the specified parameters, this function stores 
 	several files at STORAGE_PATH.  
-
+	
+	input_dimension: Dimension of input x0 and noise z 
+	x_stddev: The standard deviation of the x0 input 
+	z_stddev: The standard deviation of the z noise (for second observation y2)
 	k_squared: k_squared value for cost function
 	encoder_init_weights: a list of initial weights for encoder. 
 	decoder_init_weights: a list of initial weights for decoder. 
@@ -51,15 +54,31 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 	optimizers: list of two optimizers (for encoder and decoder)f
 	encoder_activations: a list of activation functions (variable length)
 	decoder_activations: a list of activation functions (variable length)
-	init_weights_function: Weight initialization function. 
-	init_bias_function: Bias initialization function
-	num_units_list: list of unit numbers, of the form [m, ..., m] where m is dimension.
-	m: Dimension of input/output 
+	init_weights_function: Weight initialization function (for random weights).
+	init_bias_function: Bias initialization function (for random biases).
+	num_units_list: List of unit numbers for each layer, of the form [m, ..., m] where m is dimension.
 	train_batch_size: Number of samples in a training batch 
-	mc_batch_size: Number of samples in a Monte Carlo batch (for testing)
+	mc_batch_size: Number of samples in a Monte Carlo batch (for test loss calculation during training)
 	num_epochs: Number of epoch steps to take in training
-	x_stddev: The standard deviation of the x0 input 
+
+	test_averaging: Number of points over which to test against for a single value of x0_test
+	num_test_points: Number of points in the test loss interval 
+	test_point_stddevs: The number of standard deviations the test loss interval should span. Usually 3. 
+	random_seed: Seed for tensorflow and numpy random operations. 
+	
+	generate_plots: If true, save plots as png files in storage_path. 
+	use_importance_sampling: If true, training batches are samples uniformly from an interval 
+	[-3 * x_stddev, 3 * x_stddev] instead of sampled with a Gaussian (the actual distribution).
+	use_perturbed_gd: If true, randomly perturb the weights when the loss changes very little. 
+	storage_path: Storage path for all results, including intermediate weights, train/test logs, 
+	and image files from plotting. 
+
+	TODO: If use_importance_sampling, calculate loss via pdf weighting. 
+	TODO: Add code for plots. 
+	TODO: Store initial and intermediate weights, as well as x0 vs x1, y2 vs u2, etc via Pickle. 
+	TODO: Add code for learning rate decay schemes. 
 	'''
+	#Print all the details.
 	log_string = '--------------------------------------------------\n'
 	log_string += 'HYPERPARAMETER DETAILS FOR THIS RUN:\n'
 	log_string += 'RANDOM SEED: {}\n'.format(random_seed)
@@ -68,13 +87,29 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 	log_string += 'Dimension: {}, K-Squared: {}\nX Standard Deviation: {}, Z Standard Deviation: {}\n'.format(input_dimension, 
 		k_squared, x_stddev, z_stddev)
 	log_string += '----------------------\n'
+	log_string += 'Network Units: {}\n'.format(num_units_list)
+	log_string += '----------------------\n'
 	log_string += 'ENCODER SPECS\n'
-	log_string += 'Learning Rate \t {}\n'.format(learning_rates[0])
-	log_string += 'Optimizer \t {}\n'.format(optimizers[0])
+	log_string += 'Learning Rate: {}\n'.format(learning_rates[0])
+	log_string += 'Optimizer: {}\n'.format(optimizers[0])
+	log_string += 'Activation Functions: {}\n'.format(encoder_activations)
+	if encoder_init_weights: 
+		log_string += 'Pre-Initialized Weights: Yes\n'
+	else: 
+		log_string += 'Pre-Initialized Weights: No\n'
+		log_string += 'Weight Initialization Function: {}\n'.format(init_weights_function)
+		log_string += 'Bias Initialization Function: {}\n'.format(init_bias_function)
 	log_string += '----------------------\n'
 	log_string += 'DECODER SPECS\n'
-	log_string += 'Learning Rate \t {}\n'.format(learning_rates[1])
-	log_string += 'Optimizer \t {}\n'.format(optimizers[1])
+	log_string += 'Learning Rate: {}\n'.format(learning_rates[1])
+	log_string += 'Optimizer: {}\n'.format(optimizers[1])
+	log_string += 'Activation Functions: {}\n'.format(decoder_activations)
+	if decoder_init_weights: 
+		log_string += 'Pre-Initialized Weights: Yes\n'
+	else: 
+		log_string += 'Pre-Initialized Weights: No\n'
+		log_string += 'Weight Initialization Function: {}\n'.format(init_weights_function)
+		log_string += 'Bias Initialization Function: {}\n'.format(init_bias_function)
 	log_string += '--------------------------------------------------\n'
 	print(log_string)
 	
