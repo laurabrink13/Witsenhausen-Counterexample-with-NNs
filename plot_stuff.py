@@ -39,63 +39,71 @@ for line in data[1:]:
 
 
 
-x_axis = x0_list[0][:, 0]
-y_axis = x0_list[0][:, 1]
-
+# x_axis = x0_list[0][:, 0]
+# y_axis = x0_list[0][:, 1]
+x_test = x0_list[0]
 x1_test = x1_list[0]
 u1_test = np.array(x1_test - x0_list[0])
 num_test_intervals = len(x1_list[0])
 
 #BEGIN PLOTTING
+from mpl_toolkits.mplot3d import Axes3D
+# x_axis = np.linspace(-15, 15, num=num_test_intervals)
+# y_axis = np.linspace(-15, 15, num=num_test_intervals)
+
 # PLOT X1_0
 
-fig = plt.figure()
-fig.suptitle('X1 first element')
-ax = fig.gca(projection='3d')
-for i in range(num_test_intervals):
-        ax.scatter(x_axis[i], y_axis[i], x1_test[i][0])
-#         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
-ax.set_xlabel('x0_0')
-ax.set_ylabel('x0_1')
-ax.set_zlabel('x1_0')
-plt.tight_layout()
-plt.show()
+def twod_plot_all(x0_test, x1_test, u1_test, num_test_intervals):  
+	'''
+	'''  
+	x_axis, y_axis = x0_test[:, 0], x0_test[:, 1]
+    fig = plt.figure()
+    fig.suptitle('X1 first element')
+    ax = fig.gca(projection='3d')
+    for i in range(num_test_intervals):
+            ax.scatter(x_axis[i], y_axis[i], x1_test[i][0])
+    #         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
+    ax.set_xlabel('x0_0')
+    ax.set_ylabel('x0_1')
+    ax.set_zlabel('x1_0')
+    plt.tight_layout()
+    plt.show()
 
-# PLOT X1_1
-fig = plt.figure()
-fig.suptitle('X1 second element')
-ax = fig.gca(projection='3d')
-for i in range(num_test_intervals):
-        ax.scatter(x_axis[i], y_axis[i], x1_test[i][1])
-#         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
-ax.set_xlabel('x0_0')
-ax.set_ylabel('x0_1')
-ax.set_zlabel('x1_1')
-plt.tight_layout()
-plt.show()
+    # PLOT X1_1
+    fig = plt.figure()
+    fig.suptitle('X1 second element')
+    ax = fig.gca(projection='3d')
+    for i in range(num_test_intervals):
+            ax.scatter(x_axis[i], y_axis[i], x1_test[i][1])
+    #         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
+    ax.set_xlabel('x0_0')
+    ax.set_ylabel('x0_1')
+    ax.set_zlabel('x1_1')
+    plt.tight_layout()
+    plt.show()
 
-# PLOT U1_0
-fig = plt.figure()
-fig.suptitle('U1 first element')
-ax = fig.gca(projection='3d')
-for i in range(num_test_intervals):
-        ax.scatter(x_axis[i], y_axis[i], u1_test[i][0])
-#         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
-ax.set_xlabel('x0_0')
-ax.set_ylabel('x0_1')
-ax.set_zlabel('u1_0')
-plt.tight_layout()
-plt.show()
+    # PLOT U1_0
+    fig = plt.figure()
+    fig.suptitle('U1 first element')
+    ax = fig.gca(projection='3d')
+    for i in range(num_test_intervals):
+            ax.scatter(x_axis[i], y_axis[i], u1_test[i][0])
+    #         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
+    ax.set_xlabel('x0_0')
+    ax.set_ylabel('x0_1')
+    ax.set_zlabel('u1_0')
+    plt.tight_layout()
+    plt.show()
 
-# fig = plt.figure()
-fig = plt.figure()
-fig.suptitle('U1 second element')
-ax = fig.gca(projection='3d')
-for i in range(num_test_intervals):
-        ax.scatter(x_axis[i], y_axis[i], u1_test[i][1])
-#         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
-ax.set_xlabel('x0_0')
-ax.set_ylabel('x0_1')
-ax.set_zlabel('u1_1')
-plt.tight_layout()
-plt.show()
+    # fig = plt.figure()
+    fig = plt.figure()
+    fig.suptitle('U1 second element')
+    ax = fig.gca(projection='3d')
+    for i in range(num_test_intervals):
+            ax.scatter(x_axis[i], y_axis[i], u1_test[i][1])
+    #         ax.scatter(x_axis[i], y_axis[j], x1_test[1,i,j])
+    ax.set_xlabel('x0_0')
+    ax.set_ylabel('x0_1')
+    ax.set_zlabel('u1_1')
+    plt.tight_layout()
+    plt.show()
