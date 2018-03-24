@@ -1,5 +1,3 @@
-
-
 import tensorflow as tf
 from tqdm import tqdm
 import numpy as np
