@@ -1,0 +1,36 @@
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 20PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+ENCODER SPECS
+LR 	 0.0001
+Optimizer 	 <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>
+DECODER SPECS
+LR 	 0.0001
+Optimizer 	 <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 50
+Epoch 50, Train Cost 11.82042121887207, Monte Carlo Cost: 8.93487548828125
+Epoch 100, Train Cost 11.003952026367188, Monte Carlo Cost: 8.882089614868164
+Epoch 150, Train Cost 15.263411521911621, Monte Carlo Cost: 8.11523723602295
+Epoch 200, Train Cost 13.944112777709961, Monte Carlo Cost: 8.080015182495117
+Epoch 250, Train Cost 9.905289649963379, Monte Carlo Cost: 8.301837921142578
+Epoch 300, Train Cost 11.565503120422363, Monte Carlo Cost: 8.343378067016602
+Epoch 350, Train Cost 10.104848861694336, Monte Carlo Cost: 8.231724739074707
+Epoch 400, Train Cost 11.670063018798828, Monte Carlo Cost: 8.028352737426758
+Epoch 450, Train Cost 10.969112396240234, Monte Carlo Cost: 8.354104995727539
+Epoch 500, Train Cost 9.773573875427246, Monte Carlo Cost: 8.60212516784668
+Epoch 550, Train Cost 7.239590167999268, Monte Carlo Cost: 8.243412971496582
+Epoch 600, Train Cost 13.180377006530762, Monte Carlo Cost: 8.307751655578613
+Epoch 650, Train Cost 12.93309211730957, Monte Carlo Cost: 8.27353572845459
+Epoch 700, Train Cost 6.9247894287109375, Monte Carlo Cost: 8.302672386169434
+Epoch 750, Train Cost 7.9278717041015625, Monte Carlo Cost: 8.161249160766602
+Epoch 800, Train Cost 15.089887619018555, Monte Carlo Cost: 8.20333194732666
+Epoch 850, Train Cost 13.593503952026367, Monte Carlo Cost: 8.505563735961914
+Epoch 900, Train Cost 8.991127014160156, Monte Carlo Cost: 8.121118545532227
+Epoch 950, Train Cost 10.261981964111328, Monte Carlo Cost: 8.737530708312988
+Epoch 1000, Train Cost 12.650315284729004, Monte Carlo Cost: 8.544227600097656
+Beginning testing over 100 points...
+Test averaging over 100 points...
