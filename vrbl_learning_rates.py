@@ -1,10 +1,12 @@
 import numpy as np
-from numpy import linalg as LA
+from numpy import linalg 
+import scipy.stats 
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import shelve 
 import itertools
 from os import getcwd
+import h5py
 
 # def stack_weights(encoder_vars, decoder_vars): 
 #     '''
@@ -73,10 +75,14 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 	storage_path: Storage path for all results, including intermediate weights, train/test logs, 
 	and image files from plotting. 
 
-	TODO: If use_importance_sampling, calculate loss via pdf weighting. 
-	TODO: Add code for plots. 
-	TODO: Store initial and intermediate weights, as well as x0 vs x1, y2 vs u2, etc via Pickle. 
-	TODO: Add code for learning rate decay schemes. 
+	TODO: Figure out bug in importance_sampling pdf weighting. 
+	
+	TODO: Figure out unique ID for different runs so we can recover models. 
+	TODO: Figure out how to save and restore the computational graph across different runs.
+	https://www.tensorflow.org/programmers_guide/saved_model
+	Maybe better to just go with random seed and reproduction? 
+
+	TODO: Write code that loads a graph and produces plots. 
 	'''
 	#Print all the details.
 	log_string = '--------------------------------------------------\n'
@@ -116,6 +122,13 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 
 	np.random.seed(random_seed)
 	tf.set_random_seed(random_seed)
+
+	# Declare the x0_distribution in case it is needed for importance sampling. 
+	# Note that we assume the x0 vector has uncorrelated components because its 
+	# covariance matrix is a multiple of the identity. 
+	if use_importance_sampling: 
+		x0_distribution = scipy.stats.multivariate_normal(cov = (x_stddev ** 2) * np.eye(input_dimension))
+		total_density = 0.0
 
 	
 
@@ -164,8 +177,6 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 		current_hidden = encoder_activations[i](affine_forward)
 
 	u1 = current_hidden
-	u1_cost = k_squared * tf.reduce_mean(tf.reduce_sum((u1)**2, axis=1))
-
 	x1 = u1 + x0
 	x1_noise = x1 + z
 	current_hidden = x1_noise
@@ -178,8 +189,19 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 
 	u2 = current_hidden
 	x2 = x1 - u2
-	x2_cost = tf.reduce_mean(tf.reduce_sum((x2)**2, axis=1))
 
+	# TODO fix this code for importance sampling. 
+	# if use_importance_sampling:
+	# 	print('shape') 
+	# 	print(tf.shape(x0))
+	# 	x0_density = x0_distribution.pdf(x0[0])
+	# 	# I hope these are the same shape...
+	# 	u1_cost = k_squared * tf.reduce_mean(tf.reduce_sum((u1 * x0_density)**2, axis=1))
+	# 	x2_cost = tf.reduce_mean(tf.reduce_sum((x2 * x0_density)**2, axis=1))
+	# 	wits_cost = x2_cost + u1_cost
+	# else: 
+	u1_cost = k_squared * tf.reduce_mean(tf.reduce_sum((u1)**2, axis=1))
+	x2_cost = tf.reduce_mean(tf.reduce_sum((x2)**2, axis=1))
 	wits_cost = x2_cost + u1_cost
 
 	# Define gradients and optimizers 
@@ -224,11 +246,32 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 	z_test = np.random.normal(scale=z_stddev, size=num_test_points)
 	u1_test, u2_test, y2_test = np.zeros(num_test_points), np.zeros(num_test_points), np.zeros(num_test_points)
 
+	# declare storage file for all results. 
+	weights_filepath = storage_path + '/network_weights.h5'
+	weights_file = h5py.File(weights_filepath, 'w')
+
 	with tf.Session() as sess: 
 		sess.run(tf.global_variables_initializer())
+
+		#after random initialization, store the weights. 
+		
+		weight_name_append = '_epoch_' + str(0)		
+		for i in range(len(tf.global_variables())): 
+			var_name = tf.global_variables()[i].name.split(':')[0] + weight_name_append
+			print(var_name)
+			var_value = sess.run(tf.global_variables()[i])
+			print(var_value)
+			weights_file.create_dataset(var_name, data = var_value)
+
+		#Begin training over num_epochs. 
+
 		for epoch in range(1, 1 + num_epochs): 
+			total_density = 1.0 
 			if use_importance_sampling:
 				x_batch = np.random.uniform(low = - 3 * x_stddev, high = 3 * x_stddev, size=(train_batch_size, input_dimension))
+				# Calculate total density of test points, so we can scale accordingly. 
+				# x0_density = x0_distribution.pdf(x_batch)
+				# total_density = np.sum(x0_density)
 			else: 
 				x_batch = np.random.normal(size=(train_batch_size, input_dimension), scale = x_stddev)
 			z_batch = np.random.normal(size=(train_batch_size, input_dimension), scale = x_stddev)
@@ -251,13 +294,20 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 			# l2_weight_updates.append(l2_update)
 			# prev_weights = next_weights
 
+			# Every EPOCH_STEP number of training epochs, do a bunch of stuff. 
+			# 1. Evaluate test loss and print it. 
+			# 2. Perturb the weights if the perturbed GD condition is met. 
+			# 3. Fetch all network weights and store them to the h5py file. 
 			if epoch % epoch_step == 0: 
 				mc_cost = sess.run([wits_cost], feed_dict={x0: mc_x_batch, z: mc_z_batch})
-				log_string += 'Epoch {}, Train Cost {}, Monte Carlo Cost: {}\n'.format(epoch, train_cost, mc_cost[0])
-				print('Epoch {}, Train Cost {}, Monte Carlo Cost: {}'.format(epoch, train_cost, mc_cost[0]))
+				test_cost = mc_cost[0] / total_density
+				log_string += 'Epoch {}, Train Cost {}, Monte Carlo Cost: {}\n'.format(epoch, train_cost, test_cost)
+				print('Epoch {}, Train Cost {}, Monte Carlo Cost: {}'.format(epoch, train_cost, test_cost))
+				
+				# Perturb weights if the condition is met. 
 				if use_perturbed_gd:
-					loss_update = np.abs(mc_cost[0] - prev_loss)
-					prev_loss = mc_cost[0]
+					loss_update = np.abs(test_cost - prev_loss)
+					prev_loss = test_cost
 					if loss_update < 1e-4: 
 						log_string += 'Perturbing at epoch {}\n'.format(epoch)
 						print('Perturbing at epoch {}'.format(epoch))
@@ -265,11 +315,24 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 							assign_perturbation = tf.assign(param, param + tf.random_uniform(param.shape, maxval=1e-1))
 							sess.run([assign_perturbation])
 
+				# Store all weights and biases. 
+				weight_name_append = '_epoch_' + str(epoch)
+				for i in range(len(tf.global_variables())): 
+					var_name = tf.global_variables()[i].name.split(':')[0] + weight_name_append
+					# print(var_name)
+					var_value = sess.run(tf.global_variables()[i])
+					# print(var_value)
+					weights_file.create_dataset(var_name, data = var_value)
+
+		weights_file.close()
+
 		log_string += 'Beginning testing over {} points...\n'.format(num_test_points)
 		log_string += 'Test averaging over {} points...\n'.format(test_averaging)
 
 		print('Beginning testing over {} points...'.format(num_test_points))
 		print('Test averaging over {} points...'.format(test_averaging))
+		
+			
 		for i in range(num_test_points):
 			u1t, u2t, y2t  = 0, 0, 0
 			#For each point in x0_test, average values of u1, u2, y2 over many noise values. 
@@ -288,6 +351,7 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 			y2_test[i] = y2t / test_averaging
 		x1_test = x0_test + u1_test
 		x2_test = x1_test - u2_test
+
 		with open(storage_path + '/log_dump.txt', 'w') as f: 
 			f.write(log_string)
 
@@ -474,7 +538,7 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 # 			u1_test[0, i] = u1t / test_averaging
 # 			u2_test[0, i] = u2t / test_averaging
 # 			y2_test[0, i] = y2t / test_averaging
-      
+	  
 # 	print('producing plots')
 
 # 	plt.clf()
@@ -515,7 +579,7 @@ if __name__ == "__main__":
 	num_units_list=[1, 10, 1, 10, 1], 
 	train_batch_size=50, mc_batch_size=50, num_epochs=1000, test_averaging=100,
 	num_test_points=100, test_point_stddevs=3, random_seed=20, 
-	use_importance_sampling=False, use_perturbed_gd=False, storage_path=getcwd())
+	use_importance_sampling=False, use_perturbed_gd=True, storage_path=getcwd())
 	# k_squared_vals = [0.04]
 	# encoder_init_weights_lists = [[]]
 	# decoder_init_weights_lists = [[]]
