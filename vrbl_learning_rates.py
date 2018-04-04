@@ -247,21 +247,21 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 	u1_test, u2_test, y2_test = np.zeros(num_test_points), np.zeros(num_test_points), np.zeros(num_test_points)
 
 	# declare storage file for all results. 
-	weights_filepath = storage_path + '/network_weights.h5'
-	weights_file = h5py.File(weights_filepath, 'w')
+	# weights_filepath = storage_path + '/network_weights.h5'
+	# weights_file = h5py.File(weights_filepath, 'w')
 
 	with tf.Session() as sess: 
 		sess.run(tf.global_variables_initializer())
 
 		#after random initialization, store the weights. 
 		
-		weight_name_append = '_epoch_' + str(0)		
-		for i in range(len(tf.global_variables())): 
-			var_name = tf.global_variables()[i].name.split(':')[0] + weight_name_append
-			print(var_name)
-			var_value = sess.run(tf.global_variables()[i])
-			print(var_value)
-			weights_file.create_dataset(var_name, data = var_value)
+		# weight_name_append = '_epoch_' + str(0)		
+		# for i in range(len(tf.global_variables())): 
+		# 	var_name = tf.global_variables()[i].name.split(':')[0] + weight_name_append
+		# 	print(var_name)
+		# 	var_value = sess.run(tf.global_variables()[i])
+		# 	print(var_value)
+		# 	weights_file.create_dataset(var_name, data = var_value)
 
 		#Begin training over num_epochs. 
 
@@ -316,43 +316,45 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 							sess.run([assign_perturbation])
 
 				# Store all weights and biases. 
-				weight_name_append = '_epoch_' + str(epoch)
-				for i in range(len(tf.global_variables())): 
-					var_name = tf.global_variables()[i].name.split(':')[0] + weight_name_append
-					# print(var_name)
-					var_value = sess.run(tf.global_variables()[i])
-					# print(var_value)
-					weights_file.create_dataset(var_name, data = var_value)
+				# weight_name_append = '_epoch_' + str(epoch)
+				# for i in range(len(tf.global_variables())): 
+				# 	var_name = tf.global_variables()[i].name.split(':')[0] + weight_name_append
+				# 	# print(var_name)
+				# 	var_value = sess.run(tf.global_variables()[i])
+				# 	# print(var_value)
+				# 	weights_file.create_dataset(var_name, data = var_value)
 
-		weights_file.close()
+		# weights_file.close()
 
 		log_string += 'Beginning testing over {} points...\n'.format(num_test_points)
 		log_string += 'Test averaging over {} points...\n'.format(test_averaging)
 
-		print('Beginning testing over {} points...'.format(num_test_points))
-		print('Test averaging over {} points...'.format(test_averaging))
+		# print('Beginning testing over {} points...'.format(num_test_points))
+		# print('Test averaging over {} points...'.format(test_averaging))
 		
 			
-		for i in range(num_test_points):
-			u1t, u2t, y2t  = 0, 0, 0
-			#For each point in x0_test, average values of u1, u2, y2 over many noise values. 
-			for _ in range(test_averaging):
-				#generate z on the fly.
-				u1tmp, u2tmp, y2tmp, x1tmp = sess.run(
-					[u1, u2, x1_noise, x1],
-					feed_dict={x0: x0_test[i].reshape((1, 1)),
-					z: np.array(np.random.normal(scale=z_stddev)).reshape((1, 1))}) 
-				u1t += u1tmp
-				u2t += u2tmp
-				y2t += y2tmp
+		# for i in range(num_test_points):
+		# 	u1t, u2t, y2t  = 0, 0, 0
+		# 	#For each point in x0_test, average values of u1, u2, y2 over many noise values. 
+		# 	for _ in range(test_averaging):
+		# 		#generate z on the fly.
+		# 		u1tmp, u2tmp, y2tmp, x1tmp = sess.run(
+		# 			[u1, u2, x1_noise, x1],
+		# 			feed_dict={x0: x0_test[i].reshape((1, 1)),
+		# 			z: np.array(np.random.normal(scale=z_stddev)).reshape((1, 1))}) 
+		# 		u1t += u1tmp
+		# 		u2t += u2tmp
+		# 		y2t += y2tmp
 
-			u1_test[i] = u1t / test_averaging
-			u2_test[i] = u2t / test_averaging
-			y2_test[i] = y2t / test_averaging
-		x1_test = x0_test + u1_test
-		x2_test = x1_test - u2_test
+		# 	u1_test[i] = u1t / test_averaging
+		# 	u2_test[i] = u2t / test_averaging
+		# 	y2_test[i] = y2t / test_averaging
+		# x1_test = x0_test + u1_test
+		# x2_test = x1_test - u2_test
 
-		with open(storage_path + '/log_dump.txt', 'w') as f: 
+		# WARNING:
+		# FILE NAME SHOULD BE DIFFERENT EACH RUN
+		with open(storage_path + '/seed_search_4_3_18.txt', 'a') as f: 
 			f.write(log_string)
 
 		
@@ -571,15 +573,25 @@ def cartesian_product(*arrays):
 #     db['encoder_stepfn_tanh_id_weights'] = encoder_init_data
 
 if __name__ == "__main__":
-	nn_run_fixed(input_dimension=1, x_stddev=5, z_stddev=1, k_squared=0.04, encoder_init_weights=None, decoder_init_weights=None, 
-	learning_rates=[1e-4, 1e-4], optimizers=[tf.train.GradientDescentOptimizer, tf.train.GradientDescentOptimizer], 
-	encoder_activations = [tf.nn.sigmoid, tf.identity], decoder_activations = [tf.nn.sigmoid, tf.identity], 
-	init_weights_function=tf.glorot_normal_initializer(), 
-	init_bias_function=tf.zeros_initializer(), 
-	num_units_list=[1, 10, 1, 10, 1], 
-	train_batch_size=50, mc_batch_size=50, num_epochs=1000, test_averaging=100,
-	num_test_points=100, test_point_stddevs=3, random_seed=20, 
-	use_importance_sampling=False, use_perturbed_gd=True, storage_path=getcwd())
+	NUM_SEEDS = 40
+	SEEDS = list(np.random.choice(np.arange(200), size=NUM_SEEDS))
+	OPTIMIZERS = [tf.train.GradientDescentOptimizer, tf.train.AdamOptimizer]
+	LEARNING_RATES = [1e-4, 1e-6, 1e-8, tf.train.inverse_time_decay(1e-4, tf.Variable(0, trainable=False), 1000, 0.9), 
+						tf.train.inverse_time_decay(1e-6, tf.Variable(0, trainable=False), 1000, 0.9), 
+						tf.train.inverse_time_decay(1e-8, tf.Variable(0, trainable=False), 1000, 0.9)]
+	for tup in cartesian_product(SEEDS, OPTIMIZERS, LEARNING_RATES):
+		seed, optimizer, lr = tup 
+		print('Seed {}, optimizer {}, lr {}'.format(seed, optimizer, lr))
+		nn_run_fixed(input_dimension=1, x_stddev=5, z_stddev=1, k_squared=0.04, encoder_init_weights=None, decoder_init_weights=None, 
+		learning_rates=[lr, lr], 
+		optimizers=[optimizer, optimizer], 
+		encoder_activations = [tf.nn.sigmoid, tf.identity], decoder_activations = [tf.nn.sigmoid, tf.identity], 
+		init_weights_function=tf.glorot_uniform_initializer(), 
+		init_bias_function=tf.glorot_uniform_initializer(), 
+		num_units_list=[1, 150, 1, 30, 1], 
+		train_batch_size=50, mc_batch_size=50, num_epochs=20000, test_averaging=100,
+		num_test_points=100, test_point_stddevs=3, random_seed=seed, 
+		use_importance_sampling=False, use_perturbed_gd=True, storage_path=getcwd() + '/hyperparam_logs')
 	# k_squared_vals = [0.04]
 	# encoder_init_weights_lists = [[]]
 	# decoder_init_weights_lists = [[]]

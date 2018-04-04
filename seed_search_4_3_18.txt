@@ -1,0 +1,50 @@
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 20
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 10, 1, 10, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: Tensor("InverseTimeDecay_3:0", shape=(), dtype=float32)
+Optimizer: <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a0d16fea0>, <function identity at 0x1a0ccf1d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1a112580f0>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1a113af278>
+----------------------
+DECODER SPECS
+Learning Rate: Tensor("InverseTimeDecay_4:0", shape=(), dtype=float32)
+Optimizer: <class 'tensorflow.python.training.gradient_descent.GradientDescentOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a0d16fea0>, <function identity at 0x1a0ccf1d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1a112580f0>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1a113af278>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 50
+Epoch 50, Train Cost 23.106525421142578, Monte Carlo Cost: 26.134984970092773
+Epoch 100, Train Cost 14.275907516479492, Monte Carlo Cost: 15.44400691986084
+Epoch 150, Train Cost 17.924482345581055, Monte Carlo Cost: 11.931924819946289
+Epoch 200, Train Cost 15.881936073303223, Monte Carlo Cost: 11.164029121398926
+Epoch 250, Train Cost 13.751708984375, Monte Carlo Cost: 10.840170860290527
+Epoch 300, Train Cost 12.838613510131836, Monte Carlo Cost: 10.674823760986328
+Epoch 350, Train Cost 12.638349533081055, Monte Carlo Cost: 10.245551109313965
+Epoch 400, Train Cost 13.266264915466309, Monte Carlo Cost: 10.044258117675781
+Epoch 450, Train Cost 12.144612312316895, Monte Carlo Cost: 10.07580280303955
+Epoch 500, Train Cost 12.798600196838379, Monte Carlo Cost: 10.065589904785156
+Epoch 550, Train Cost 8.549161911010742, Monte Carlo Cost: 9.712587356567383
+Epoch 600, Train Cost 16.078510284423828, Monte Carlo Cost: 9.849526405334473
+Epoch 650, Train Cost 14.735453605651855, Monte Carlo Cost: 9.714340209960938
+Epoch 700, Train Cost 8.330028533935547, Monte Carlo Cost: 9.723958969116211
+Epoch 750, Train Cost 9.452705383300781, Monte Carlo Cost: 9.428020477294922
+Epoch 800, Train Cost 16.280412673950195, Monte Carlo Cost: 9.371467590332031
+Epoch 850, Train Cost 14.69029426574707, Monte Carlo Cost: 9.49950885772705
+Epoch 900, Train Cost 11.025748252868652, Monte Carlo Cost: 9.085038185119629
+Epoch 950, Train Cost 10.766056060791016, Monte Carlo Cost: 9.625988006591797
+Epoch 1000, Train Cost 13.992146492004395, Monte Carlo Cost: 9.391302108764648
+Beginning testing over 100 points...
+Test averaging over 100 points...
