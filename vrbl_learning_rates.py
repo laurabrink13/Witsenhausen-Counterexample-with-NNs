@@ -326,8 +326,8 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 
 		# weights_file.close()
 
-		log_string += 'Beginning testing over {} points...\n'.format(num_test_points)
-		log_string += 'Test averaging over {} points...\n'.format(test_averaging)
+		# log_string += 'Beginning testing over {} points...\n'.format(num_test_points)
+		# log_string += 'Test averaging over {} points...\n'.format(test_averaging)
 
 		# print('Beginning testing over {} points...'.format(num_test_points))
 		# print('Test averaging over {} points...'.format(test_averaging))
@@ -354,7 +354,7 @@ def nn_run_fixed(input_dimension, x_stddev, z_stddev, k_squared, encoder_init_we
 
 		# WARNING:
 		# FILE NAME SHOULD BE DIFFERENT EACH RUN
-		with open(storage_path + '/seed_search_4_3_18.txt', 'a') as f: 
+		with open(storage_path + '/long_run_larger_mc_4_4_18.txt', 'a') as f: 
 			f.write(log_string)
 
 		
@@ -574,11 +574,9 @@ def cartesian_product(*arrays):
 
 if __name__ == "__main__":
 	NUM_SEEDS = 40
-	SEEDS = list(np.random.choice(np.arange(200), size=NUM_SEEDS))
-	OPTIMIZERS = [tf.train.GradientDescentOptimizer, tf.train.AdamOptimizer]
-	LEARNING_RATES = [1e-4, 1e-6, 1e-8, tf.train.inverse_time_decay(1e-4, tf.Variable(0, trainable=False), 1000, 0.9), 
-						tf.train.inverse_time_decay(1e-6, tf.Variable(0, trainable=False), 1000, 0.9), 
-						tf.train.inverse_time_decay(1e-8, tf.Variable(0, trainable=False), 1000, 0.9)]
+	SEEDS = np.random.choice(np.arange(200), size=NUM_SEEDS)
+	OPTIMIZERS = [tf.train.AdamOptimizer]
+	LEARNING_RATES = [1e-2, 1e-4]
 	for tup in cartesian_product(SEEDS, OPTIMIZERS, LEARNING_RATES):
 		seed, optimizer, lr = tup 
 		print('Seed {}, optimizer {}, lr {}'.format(seed, optimizer, lr))
@@ -589,9 +587,9 @@ if __name__ == "__main__":
 		init_weights_function=tf.glorot_uniform_initializer(), 
 		init_bias_function=tf.glorot_uniform_initializer(), 
 		num_units_list=[1, 150, 1, 30, 1], 
-		train_batch_size=50, mc_batch_size=50, num_epochs=20000, test_averaging=100,
+		train_batch_size=50, mc_batch_size=10000, num_epochs=100000, test_averaging=100,
 		num_test_points=100, test_point_stddevs=3, random_seed=seed, 
-		use_importance_sampling=False, use_perturbed_gd=True, storage_path=getcwd() + '/hyperparam_logs')
+		use_importance_sampling=False, use_perturbed_gd=False, storage_path=getcwd() + '/hyperparam_logs')
 	# k_squared_vals = [0.04]
 	# encoder_init_weights_lists = [[]]
 	# decoder_init_weights_lists = [[]]

@@ -1,0 +1,384 @@
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 97
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.1
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.1
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 0.9847602248191833, Monte Carlo Cost: 0.9630135893821716
+Epoch 6000, Train Cost 0.6285393834114075, Monte Carlo Cost: 0.9641517400741577
+Epoch 9000, Train Cost 1.3135069608688354, Monte Carlo Cost: 0.9688351154327393
+Epoch 12000, Train Cost 1.3992027044296265, Monte Carlo Cost: 0.969056248664856
+Epoch 15000, Train Cost 1.3027920722961426, Monte Carlo Cost: 0.971571683883667
+Epoch 18000, Train Cost 0.8027992844581604, Monte Carlo Cost: 1.0350258350372314
+Epoch 21000, Train Cost 1.0517995357513428, Monte Carlo Cost: 0.9967828989028931
+Epoch 24000, Train Cost 0.8701652884483337, Monte Carlo Cost: 0.9685711860656738
+Epoch 27000, Train Cost 1.1645597219467163, Monte Carlo Cost: 0.9885954856872559
+Epoch 30000, Train Cost 1.0530674457550049, Monte Carlo Cost: 1.034212350845337
+Epoch 33000, Train Cost 0.6319393515586853, Monte Carlo Cost: 0.9826703071594238
+Epoch 36000, Train Cost 0.9392306208610535, Monte Carlo Cost: 0.9961523413658142
+Epoch 39000, Train Cost 0.9233580827713013, Monte Carlo Cost: 0.9629001617431641
+Epoch 42000, Train Cost 1.671849250793457, Monte Carlo Cost: 1.318939447402954
+Epoch 45000, Train Cost 0.8077510595321655, Monte Carlo Cost: 1.0423351526260376
+Epoch 48000, Train Cost 1.0592809915542603, Monte Carlo Cost: 0.9850847721099854
+Epoch 51000, Train Cost 1.1713111400604248, Monte Carlo Cost: 0.977858304977417
+Epoch 54000, Train Cost 0.8115471601486206, Monte Carlo Cost: 1.0735206604003906
+Epoch 57000, Train Cost 1.282288908958435, Monte Carlo Cost: 0.9868682026863098
+Epoch 60000, Train Cost 0.831612765789032, Monte Carlo Cost: 1.0616395473480225
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 97
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.01
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.01
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 1.002094030380249, Monte Carlo Cost: 0.9709718823432922
+Epoch 6000, Train Cost 0.6480919718742371, Monte Carlo Cost: 0.9627567529678345
+Epoch 9000, Train Cost 1.3175616264343262, Monte Carlo Cost: 0.9777712821960449
+Epoch 12000, Train Cost 1.3856719732284546, Monte Carlo Cost: 0.9595241546630859
+Epoch 15000, Train Cost 1.2824254035949707, Monte Carlo Cost: 0.9571975469589233
+Epoch 18000, Train Cost 0.8160607814788818, Monte Carlo Cost: 0.9584649801254272
+Epoch 21000, Train Cost 1.0401442050933838, Monte Carlo Cost: 0.9613127708435059
+Epoch 24000, Train Cost 0.8650218844413757, Monte Carlo Cost: 0.9567781686782837
+Epoch 27000, Train Cost 1.1111620664596558, Monte Carlo Cost: 0.9773985743522644
+Epoch 30000, Train Cost 0.9375260472297668, Monte Carlo Cost: 0.9569598436355591
+Epoch 33000, Train Cost 0.6171841621398926, Monte Carlo Cost: 0.9571585655212402
+Epoch 36000, Train Cost 0.9154136776924133, Monte Carlo Cost: 0.9579421877861023
+Epoch 39000, Train Cost 0.9276821613311768, Monte Carlo Cost: 0.9570907950401306
+Epoch 42000, Train Cost 1.3059685230255127, Monte Carlo Cost: 0.9593909978866577
+Epoch 45000, Train Cost 0.7490074634552002, Monte Carlo Cost: 0.9594680070877075
+Epoch 48000, Train Cost 0.9691967368125916, Monte Carlo Cost: 0.9578970670700073
+Epoch 51000, Train Cost 1.141709327697754, Monte Carlo Cost: 0.9558647871017456
+Epoch 54000, Train Cost 0.660724937915802, Monte Carlo Cost: 0.957438588142395
+Epoch 57000, Train Cost 1.202987790107727, Monte Carlo Cost: 0.9588630795478821
+Epoch 60000, Train Cost 0.7937102317810059, Monte Carlo Cost: 0.9564492106437683
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 97
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 1.0307972431182861, Monte Carlo Cost: 1.0062313079833984
+Epoch 6000, Train Cost 0.6285010576248169, Monte Carlo Cost: 0.974197506904602
+Epoch 9000, Train Cost 1.3217933177947998, Monte Carlo Cost: 0.9670326709747314
+Epoch 12000, Train Cost 1.390524983406067, Monte Carlo Cost: 0.963597297668457
+Epoch 15000, Train Cost 1.29290771484375, Monte Carlo Cost: 0.9621662497520447
+Epoch 18000, Train Cost 0.7958259582519531, Monte Carlo Cost: 0.9607998728752136
+Epoch 21000, Train Cost 1.0349626541137695, Monte Carlo Cost: 0.9606768488883972
+Epoch 24000, Train Cost 0.8646036982536316, Monte Carlo Cost: 0.9596002697944641
+Epoch 27000, Train Cost 1.1075669527053833, Monte Carlo Cost: 0.95963054895401
+Epoch 30000, Train Cost 0.9345223307609558, Monte Carlo Cost: 0.9595315456390381
+Epoch 33000, Train Cost 0.6175032258033752, Monte Carlo Cost: 0.9599336385726929
+Epoch 36000, Train Cost 0.9135293960571289, Monte Carlo Cost: 0.959942638874054
+Epoch 39000, Train Cost 0.9302423000335693, Monte Carlo Cost: 0.9590833783149719
+Epoch 42000, Train Cost 1.2999414205551147, Monte Carlo Cost: 0.958137035369873
+Epoch 45000, Train Cost 0.7488771677017212, Monte Carlo Cost: 0.958666980266571
+Epoch 48000, Train Cost 0.959980309009552, Monte Carlo Cost: 0.9580274820327759
+Epoch 51000, Train Cost 1.144118309020996, Monte Carlo Cost: 0.9575716853141785
+Epoch 54000, Train Cost 0.6623588800430298, Monte Carlo Cost: 0.9579548835754395
+Epoch 57000, Train Cost 1.2006046772003174, Monte Carlo Cost: 0.9589041471481323
+Epoch 60000, Train Cost 0.7957137823104858, Monte Carlo Cost: 0.9591745734214783
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 97
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.0001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.0001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 1.5982848405838013, Monte Carlo Cost: 1.456680417060852
+Epoch 6000, Train Cost 0.6696707606315613, Monte Carlo Cost: 1.138864278793335
+Epoch 9000, Train Cost 1.4031227827072144, Monte Carlo Cost: 1.0499320030212402
+Epoch 12000, Train Cost 1.4274239540100098, Monte Carlo Cost: 1.016282558441162
+Epoch 15000, Train Cost 1.3237371444702148, Monte Carlo Cost: 0.9993782639503479
+Epoch 18000, Train Cost 0.8297696113586426, Monte Carlo Cost: 0.9900561571121216
+Epoch 21000, Train Cost 1.0623066425323486, Monte Carlo Cost: 0.9834601283073425
+Epoch 24000, Train Cost 0.8771973848342896, Monte Carlo Cost: 0.9788938760757446
+Epoch 27000, Train Cost 1.116689682006836, Monte Carlo Cost: 0.9764609932899475
+Epoch 30000, Train Cost 0.9399214386940002, Monte Carlo Cost: 0.9746436476707458
+Epoch 33000, Train Cost 0.6197264790534973, Monte Carlo Cost: 0.9720773696899414
+Epoch 36000, Train Cost 0.9145995378494263, Monte Carlo Cost: 0.9703440070152283
+Epoch 39000, Train Cost 0.9349161982536316, Monte Carlo Cost: 0.9689508080482483
+Epoch 42000, Train Cost 1.3131799697875977, Monte Carlo Cost: 0.9677402973175049
+Epoch 45000, Train Cost 0.7518718242645264, Monte Carlo Cost: 0.9670348763465881
+Epoch 48000, Train Cost 0.9584866166114807, Monte Carlo Cost: 0.9664821028709412
+Epoch 51000, Train Cost 1.1431981325149536, Monte Carlo Cost: 0.9654982089996338
+Epoch 54000, Train Cost 0.6631799340248108, Monte Carlo Cost: 0.9646161198616028
+Epoch 57000, Train Cost 1.2056024074554443, Monte Carlo Cost: 0.9645559191703796
+Epoch 60000, Train Cost 0.7952631711959839, Monte Carlo Cost: 0.964372456073761
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 188
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.1
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.1
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 1.2268973588943481, Monte Carlo Cost: 1.0299592018127441
+Epoch 6000, Train Cost 1.4221822023391724, Monte Carlo Cost: 1.0246691703796387
+Epoch 9000, Train Cost 0.7855817079544067, Monte Carlo Cost: 1.1634244918823242
+Epoch 12000, Train Cost 0.6752608418464661, Monte Carlo Cost: 1.062798023223877
+Epoch 15000, Train Cost 0.8072701692581177, Monte Carlo Cost: 1.0634971857070923
+Epoch 18000, Train Cost 0.7922815680503845, Monte Carlo Cost: 1.0494544506072998
+Epoch 21000, Train Cost 1.2217435836791992, Monte Carlo Cost: 1.0175397396087646
+Epoch 24000, Train Cost 0.7982529997825623, Monte Carlo Cost: 1.013067603111267
+Epoch 27000, Train Cost 1.244273066520691, Monte Carlo Cost: 1.0204346179962158
+Epoch 30000, Train Cost 1.2915817499160767, Monte Carlo Cost: 1.0515424013137817
+Epoch 33000, Train Cost 1.1647965908050537, Monte Carlo Cost: 1.0763685703277588
+Epoch 36000, Train Cost 0.6907078623771667, Monte Carlo Cost: 1.0288658142089844
+Epoch 39000, Train Cost 1.4095295667648315, Monte Carlo Cost: 1.2567963600158691
+Epoch 42000, Train Cost 1.0315123796463013, Monte Carlo Cost: 1.0648843050003052
+Epoch 45000, Train Cost 0.8923254609107971, Monte Carlo Cost: 1.0339524745941162
+Epoch 48000, Train Cost 1.1080468893051147, Monte Carlo Cost: 1.0430389642715454
+Epoch 51000, Train Cost 1.4104005098342896, Monte Carlo Cost: 1.1271929740905762
+Epoch 54000, Train Cost 0.8648017048835754, Monte Carlo Cost: 1.113156795501709
+Epoch 57000, Train Cost 1.8932576179504395, Monte Carlo Cost: 1.7104018926620483
+Epoch 60000, Train Cost 1.1058030128479004, Monte Carlo Cost: 1.0278024673461914
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 188
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.01
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.01
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 1.2385241985321045, Monte Carlo Cost: 1.0272486209869385
+Epoch 6000, Train Cost 1.4121969938278198, Monte Carlo Cost: 1.0174272060394287
+Epoch 9000, Train Cost 0.7430692315101624, Monte Carlo Cost: 1.0115615129470825
+Epoch 12000, Train Cost 0.6239889860153198, Monte Carlo Cost: 1.0126110315322876
+Epoch 15000, Train Cost 0.8001953363418579, Monte Carlo Cost: 1.016371250152588
+Epoch 18000, Train Cost 0.7930638790130615, Monte Carlo Cost: 1.0119837522506714
+Epoch 21000, Train Cost 1.2170579433441162, Monte Carlo Cost: 1.0096349716186523
+Epoch 24000, Train Cost 0.7942516803741455, Monte Carlo Cost: 1.0156892538070679
+Epoch 27000, Train Cost 1.2375880479812622, Monte Carlo Cost: 1.0118225812911987
+Epoch 30000, Train Cost 1.2728259563446045, Monte Carlo Cost: 1.0114465951919556
+Epoch 33000, Train Cost 0.9882298707962036, Monte Carlo Cost: 1.0110543966293335
+Epoch 36000, Train Cost 0.673953115940094, Monte Carlo Cost: 1.0130503177642822
+Epoch 39000, Train Cost 1.214450478553772, Monte Carlo Cost: 1.011614203453064
+Epoch 42000, Train Cost 0.9731977581977844, Monte Carlo Cost: 1.0192927122116089
+Epoch 45000, Train Cost 0.864797055721283, Monte Carlo Cost: 1.00983726978302
+Epoch 48000, Train Cost 1.0618911981582642, Monte Carlo Cost: 1.0104730129241943
+Epoch 51000, Train Cost 1.346320390701294, Monte Carlo Cost: 1.011247992515564
+Epoch 54000, Train Cost 0.806483805179596, Monte Carlo Cost: 1.010878086090088
+Epoch 57000, Train Cost 1.1462684869766235, Monte Carlo Cost: 1.0138698816299438
+Epoch 60000, Train Cost 1.0855401754379272, Monte Carlo Cost: 1.0105246305465698
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 188
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 1.279000163078308, Monte Carlo Cost: 1.0476008653640747
+Epoch 6000, Train Cost 1.4197851419448853, Monte Carlo Cost: 1.0232442617416382
+Epoch 9000, Train Cost 0.7479434013366699, Monte Carlo Cost: 1.0182204246520996
+Epoch 12000, Train Cost 0.6252305507659912, Monte Carlo Cost: 1.0158665180206299
+Epoch 15000, Train Cost 0.7948063015937805, Monte Carlo Cost: 1.0147219896316528
+Epoch 18000, Train Cost 0.7860711812973022, Monte Carlo Cost: 1.0132328271865845
+Epoch 21000, Train Cost 1.2222594022750854, Monte Carlo Cost: 1.0112847089767456
+Epoch 24000, Train Cost 0.7984440922737122, Monte Carlo Cost: 1.013310432434082
+Epoch 27000, Train Cost 1.239799976348877, Monte Carlo Cost: 1.012073040008545
+Epoch 30000, Train Cost 1.2746162414550781, Monte Carlo Cost: 1.0126376152038574
+Epoch 33000, Train Cost 0.9909340143203735, Monte Carlo Cost: 1.0119297504425049
+Epoch 36000, Train Cost 0.6741476058959961, Monte Carlo Cost: 1.015993356704712
+Epoch 39000, Train Cost 1.2189525365829468, Monte Carlo Cost: 1.0127743482589722
+Epoch 42000, Train Cost 0.9713156223297119, Monte Carlo Cost: 1.0122618675231934
+Epoch 45000, Train Cost 0.8645699620246887, Monte Carlo Cost: 1.011656641960144
+Epoch 48000, Train Cost 1.0614248514175415, Monte Carlo Cost: 1.0113252401351929
+Epoch 51000, Train Cost 1.3418735265731812, Monte Carlo Cost: 1.0148990154266357
+Epoch 54000, Train Cost 0.8136501908302307, Monte Carlo Cost: 1.0112054347991943
+Epoch 57000, Train Cost 1.1495391130447388, Monte Carlo Cost: 1.0135470628738403
+Epoch 60000, Train Cost 1.0884536504745483, Monte Carlo Cost: 1.0127720832824707
+--------------------------------------------------
+HYPERPARAMETER DETAILS FOR THIS RUN:
+RANDOM SEED: 188
+----------------------
+PROBLEM SPECIFICATION
+Dimension: 1, K-Squared: 0.04
+X Standard Deviation: 5, Z Standard Deviation: 1
+----------------------
+Network Units: [1, 150, 1, 30, 1]
+----------------------
+ENCODER SPECS
+Learning Rate: 0.0001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+----------------------
+DECODER SPECS
+Learning Rate: 0.0001
+Optimizer: <class 'tensorflow.python.training.adam.AdamOptimizer'>
+Activation Functions: [<function sigmoid at 0x1a192d7d90>, <function identity at 0x1a18e55d08>]
+Pre-Initialized Weights: No
+Weight Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x10d41d358>
+Bias Initialization Function: <tensorflow.python.ops.init_ops.VarianceScaling object at 0x1810a90898>
+--------------------------------------------------
+Beginning Training....
+Training Batch Size: 50, MC Batch Size: 1000
+Epoch 3000, Train Cost 1.8963919878005981, Monte Carlo Cost: 1.4668551683425903
+Epoch 6000, Train Cost 1.6059856414794922, Monte Carlo Cost: 1.1659811735153198
+Epoch 9000, Train Cost 0.7687441110610962, Monte Carlo Cost: 1.0749084949493408
+Epoch 12000, Train Cost 0.6366859078407288, Monte Carlo Cost: 1.0465691089630127
+Epoch 15000, Train Cost 0.8254156708717346, Monte Carlo Cost: 1.036142349243164
+Epoch 18000, Train Cost 0.7952815890312195, Monte Carlo Cost: 1.0300228595733643
+Epoch 21000, Train Cost 1.2284574508666992, Monte Carlo Cost: 1.0262022018432617
+Epoch 24000, Train Cost 0.8000509738922119, Monte Carlo Cost: 1.023766040802002
+Epoch 27000, Train Cost 1.2465386390686035, Monte Carlo Cost: 1.021439552307129
+Epoch 30000, Train Cost 1.2795202732086182, Monte Carlo Cost: 1.0197981595993042
+Epoch 33000, Train Cost 0.994187593460083, Monte Carlo Cost: 1.019417405128479
+Epoch 36000, Train Cost 0.6764785647392273, Monte Carlo Cost: 1.0186009407043457
+Epoch 39000, Train Cost 1.2337639331817627, Monte Carlo Cost: 1.0190635919570923
+Epoch 42000, Train Cost 0.9768297672271729, Monte Carlo Cost: 1.0173646211624146
+Epoch 45000, Train Cost 0.8700120449066162, Monte Carlo Cost: 1.0164411067962646
+Epoch 48000, Train Cost 1.063349723815918, Monte Carlo Cost: 1.015479564666748
+Epoch 51000, Train Cost 1.3444716930389404, Monte Carlo Cost: 1.0156394243240356
+Epoch 54000, Train Cost 0.8079193234443665, Monte Carlo Cost: 1.0153224468231201
+Epoch 57000, Train Cost 1.1612036228179932, Monte Carlo Cost: 1.015497088432312
+Epoch 60000, Train Cost 1.0998905897140503, Monte Carlo Cost: 1.0149903297424316
